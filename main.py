@@ -5,7 +5,7 @@ from flask import request
 from collections import defaultdict
 
 # name der Applikation
-app = Flask("super().__sad__(text_analysis)")
+app = Flask("super__sad__text_analysis")
 
 # Globale Variablen und Funktionen
 variable = "Inhalt"
@@ -29,7 +29,7 @@ def home():
 @app.route('/name_seite', methods=["GET", "POST"])
 # - Streckenübersicht
 # - Filtermöglichkeiten für Suche (Ersetzt separate Suchseite)
-def show_routes():
+def name_seite():
     # Blah blah
     return render_template("name_seite.html")
 
