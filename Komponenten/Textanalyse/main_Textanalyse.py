@@ -1,7 +1,3 @@
-import csv
-from textblob_de import TextBlobDE
-import pandas as pd
-
 from Corpus import Corpus
 from Sentiment import Sentiments
 from Sentiment import SentimentDataFrame
