@@ -26,6 +26,8 @@ def main():
 
     #Test, wie sieht das DataFrame aus:
     print(sentiments_df.head())
+    print(sentiments_df['Sentiment'])
+
 
 
 if __name__ == '__main__':

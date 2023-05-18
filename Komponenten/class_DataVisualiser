@@ -8,6 +8,13 @@ class DataVisualizer:
         self.data_1 = data_1
         self.colors = colors
 
+"""Kommentar Sara: Daten kommen als DataFrame aus der Analyse, deswegen folgender Änderungsvorschlag für
+     def __init__(self, sentiments_df, colors=None):
+        self.sentiments_df = sentiments_df
+
+Die Spalte mit der Klassifikation "neutra", "positiv", "negativ" heisst "Sentiment"
+"""
+
 #Wenn das Ergebnis einer Sentimentanalyse in einem CSV- oder DataFrame-Format vorliegt, kann der Code entsprechend angepasst werden.
     #def load_data_from_csv(self):
     #     df = pd.read_csv(self.csv_file)
