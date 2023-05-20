@@ -1,6 +1,6 @@
-from export import Exporter
+from export import Export
 
-class PNGExporter(Exporter):
+class PNGExporter(Export):
     def __init__(self, name: str, data: bytes, quality: int):
         super().__init__(name, data)
         self.quality = quality
