@@ -1,7 +1,7 @@
 import unittest
-from export import Exporter
+from export import Export
 
-class ExporterTest(unittest.TestCase):
+class ExportTest(unittest.TestCase):
     def test_compress_data(self):
         # Test für die Komprimierung der Daten
         pass
