@@ -6,7 +6,24 @@ from collections import defaultdict
 import pandas as pd
 
 # Komponenten laden
-from Komponenten.UI import ui_funktionen as ui
+
+# Custom Funktionen für die Benutzeroberfläche
+from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df
+
+# Datenimport
+
+# Textanalyse
+from Komponenten.Textanalyse.Corpus import Corpus
+from Komponenten.Textanalyse.Sentiment import Sentiments
+# Visualisierung
+from Komponenten.Visualisierung.DataVisualiser import DataVisualizer
+
+# Export
+from Komponenten.Export.Export import Export
+from Komponenten.Export.Image_data import ImageData
+from Komponenten.Export.PNG_Exporter import PNGExporter
+
+
 
 # name der Applikation
 app = Flask("super__sad__text_analysis")
@@ -56,7 +73,7 @@ def import_anzeigen():
     if request.method == "POST":
         csv_datei = request.files['csv_datei']
         csv_inhalt = pd.read_csv(csv_datei, sep=",", names=["Texte"])
-        csv_tabelle = ui.bs_tabelle_aus_df(csv_inhalt)
+        csv_tabelle = bs_tabelle_aus_df(csv_inhalt)
     return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
 
 

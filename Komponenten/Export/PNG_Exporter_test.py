@@ -1,5 +1,5 @@
 import unittest
-from png_exporter import PNGExporter
+from PNG_Exporter import PNGExporter
 
 
 class PNGExporterTest(unittest.TestCase):
