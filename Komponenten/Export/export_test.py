@@ -1,5 +1,5 @@
 import unittest
-from export import Export
+from Export import Export
 import Visualization
 
 class ExportTest(unittest.TestCase):
