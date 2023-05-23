@@ -5,7 +5,7 @@ import pandas as pd
 from tabulate import tabulate
 from DataVisualiser import DataVisualiser
 
-class TestDataVisualizer(unittest.TestCase):
+class TestDataVisualiser(unittest.TestCase):
     def setUp(self):
         self.data = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
                                   "Count": [30, 20, 50]})
