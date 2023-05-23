@@ -64,7 +64,7 @@ class DataControl:
     @staticmethod
     def check_column_count(file_name):
         with open(file_name, 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
+            reader = csv.reader(file, delimiter=";")
             header = next(reader, None)
             if len(header) == 1:
                 for row in reader:
@@ -77,7 +77,7 @@ class DataControl:
     @staticmethod
     def check_string_values(file_name):
         with open(file_name, 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
+            reader = csv.reader(file, delimiter=";")
             header = next(reader, None)
             if len(header) == 1:
                 for row in reader:
@@ -93,6 +93,10 @@ file_name = "ImportSAD2.csv"
 data_importer = DataImport()
 data_importer.import_data(file_name)
 
+# Kommentar Andreas:
+# - check_string_values wird hier nie ausgeführt, sofern check_column_count True ist
+# - Wenn du beides möchtes musst du es auseinandernehmen
+# - Wenn es voneinander abhängen soll, musst du evtl. die Bedingungen umdrehen
 if DataControl.check_column_count(file_name):
     print("Data control successful.")
     if DataControl.check_string_values(file_name):
