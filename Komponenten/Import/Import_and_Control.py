@@ -33,9 +33,7 @@ class DataImport:
         return file_format
 
     def get_file_size(self, file_name):
-        # Code zum Ermitteln der Dateigröße
-        # Hier wird die Dateigröße einfach als 0 angenommen
-        file_size = 0
+        file_size = os.path.getsize(file_name)
         return file_size
 
     def display_file_info(self):
@@ -64,7 +62,7 @@ class DataControl:
     @staticmethod
     def check_column_count(file_name):
         with open(file_name, 'r', encoding='utf-8') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file)
             header = next(reader, None)
             if len(header) == 1:
                 for row in reader:
