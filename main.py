@@ -1,17 +1,22 @@
 # benötigte Module importieren
-from flask import Flask, redirect
-from flask import render_template
-from flask import request
+from flask import Flask, redirect, render_template, request, flash, session
+import os
 from collections import defaultdict
 import pandas as pd
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'uploads/'
+
 
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
-from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df
+from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df, upload_verzeichnis_erstellen
 
 # Datenimport
 from Komponenten.Import.Import_and_Control import DataImport, DataControl
+
+
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
 from Komponenten.Textanalyse.Sentiment import Sentiments
@@ -26,6 +31,11 @@ from Komponenten.Export.PNG_Exporter import PNGExporter
 
 # name der Applikation
 app = Flask("super__sad__text_analysis")
+app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45622'
+UPLOAD_FOLDER = 'uploads/'
+upload_verzeichnis_erstellen(UPLOAD_FOLDER)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Globale Variablen und Funktionen
 app_titel = "super().__sad__(text_analysis)"
@@ -70,10 +80,22 @@ def home():
 def import_anzeigen():
     titel = "Importierte Text"
     if request.method == "POST":
-        data_importer = Import_and_Control.DataImport()
-        data_importer.import_data(request.files['csv_datei'])
-        csv_tabelle = data_importer.display_data()
-    return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
+        if 'csv_datei' not in request.files:
+            flash('Keine Datei erhalten')
+            return redirect(request.url)
+        csv_datei = request.files['csv_datei']
+        # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
+        if csv_datei.filename == '':
+            flash('Keine Datei ausgewählt')
+            return redirect(request.url)
+        # Datei speichern
+        dateiname = secure_filename(csv_datei.filename)
+        csv_datei.save(os.path.join(app.config['UPLOAD_FOLDER'], dateiname))
+        data_importer = DataImport()
+        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], dateiname))
+        csv_tabelle = bs_tabelle_aus_df(data_importer.get_dataframe().head())
+        return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
+    return("Keine Formular erhalten")
 
 
 # - Sentiment Analysis

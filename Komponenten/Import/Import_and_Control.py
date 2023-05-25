@@ -1,5 +1,6 @@
 import os
 import csv
+import pandas as pd
 
 class DataImport:
     def __init__(self):
@@ -56,6 +57,11 @@ class DataImport:
             for row in reader:
                  if row:
                     print(row[0])
+
+    # Für die Webui benötige ich ein Dataframe und kein Print-Funktionen
+    def get_dataframe(self):
+        return pd.read_csv(self.file_name, header=None)
+
 
 
 class DataControl:

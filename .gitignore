@@ -1,10 +1,16 @@
 # Project specific exclusion
+## Test-Dateien
+test
+test.csv
+## Ordner für uploads
+uploads/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-test
+
 
 # C extensions
 *.so
