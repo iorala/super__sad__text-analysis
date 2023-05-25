@@ -87,21 +87,5 @@ class DataControl:
             else:
                 return False
 
-# Verwendung der Klassen, Import der Datei und Datenkontrolle
-file_name = "ImportSAD2.csv"
-
-data_importer = DataImport()
-data_importer.import_data(file_name)
-
-# Kommentar Andreas:
-# - check_string_values wird hier nie ausgeführt, sofern check_column_count True ist
-# - Wenn du beides möchtes musst du es auseinandernehmen
-# - Wenn es voneinander abhängen soll, musst du evtl. die Bedingungen umdrehen
-if DataControl.check_column_count(file_name):
-    print("Data control successful.")
-    if DataControl.check_string_values(file_name):
-        print("All values are strings.")
-    else:
-        print("Error: Non-string values found in the CSV file.")
-else:
-    print("Error: Multiple columns found in the CSV file.")
+# Kommentar Andreas: Bitte kein Beispielcode in den Klassendefinitionen, sonst kann ich diese in der UI nicht laden
+# → nach Import_and_Control_demo.py verschoben

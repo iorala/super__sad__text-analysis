@@ -11,18 +11,17 @@ import pandas as pd
 from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df
 
 # Datenimport
-
+from Komponenten.Import.Import_and_Control import DataImport, DataControl
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
 from Komponenten.Textanalyse.Sentiment import Sentiments
 # Visualisierung
-from Komponenten.Visualisierung.DataVisualiser import DataVisualizer
+from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
 # Export
 from Komponenten.Export.Export import Export
 from Komponenten.Export.Image_data import ImageData
 from Komponenten.Export.PNG_Exporter import PNGExporter
-
 
 
 # name der Applikation
@@ -71,9 +70,9 @@ def home():
 def import_anzeigen():
     titel = "Importierte Text"
     if request.method == "POST":
-        csv_datei = request.files['csv_datei']
-        csv_inhalt = pd.read_csv(csv_datei, sep=",", names=["Texte"])
-        csv_tabelle = bs_tabelle_aus_df(csv_inhalt)
+        data_importer = Import_and_Control.DataImport()
+        data_importer.import_data(request.files['csv_datei'])
+        csv_tabelle = data_importer.display_data()
     return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
 
 

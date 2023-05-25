@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tabulate import tabulate
 
+
 class DataVisualiser:
     def __init__(self, data):
         self.data = data
@@ -25,16 +26,8 @@ class DataVisualiser:
 
     def display_table(self):
         table = tabulate(self.data, headers='keys', tablefmt='fancy_grid')
-        print (table)
+        print(table)
 
-# Beispielverwendung der Klasse mit dem Dataframe "sentiments_df"
-sentiments_df = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
-                              "Count": [30, 20, 50]})
-sentiments_df.set_index("Sentiment", inplace=True)
-visualizer = DataVisualiser(sentiments_df, colors)
-#
-visualizer.plot_bar_chart()
-#
-visualizer.plot_pie_chart()
-#
-visualizer.display_table()
+
+# Kommentar Andreas: Bitte kein Beispielcode in den Klassendefinitionen, sonst kann ich diese in der UI nicht laden
+# → nach DataVisualizer_demo.py verschoben
