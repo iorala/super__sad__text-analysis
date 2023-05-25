@@ -10,7 +10,6 @@ class TestDataVisualiser(unittest.TestCase):
         self.data = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
                                   "Count": [30, 20, 50]})
         self.data.set_index("Sentiment", inplace=True)
-        self.colors = ["lightgreen", "red", "lightgray"]
         self.visualizer = DataVisualiser(self.data, self.colors)
 
     def tearDown(self):
