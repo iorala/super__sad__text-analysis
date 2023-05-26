@@ -40,16 +40,16 @@ class DataImport:
     def display_file_info(self):
         print("File Name:", self.file_name)
         print("File Format:", self.file_format)
-        print("File Size:", self.file_size, "bytes")
+        print("File Grösse:", self.file_size, "bytes")
 
     def import_success_message(self):
-        print("Data import successful.")
+        print("Daten Import erfolgreich.")
 
     def import_error_message(self):
-        print("Error: File not found or incorrect file path.")
+        print("Fehler: File konnte nicht gefunden werden oder falscher Dateipfad.")
 
     def column_error_message(self):
-        print("Error: Multiple columns found in the CSV file. Only one column is allowed.")
+        print("Fehler: Mehrere Spalten in der Datei vorhanden. Es ist nur eine Spalte mit Inputs erlaubt.")
 
     def display_data(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
