@@ -1,6 +1,5 @@
 import unittest
 from Export import Export
-# import Visualization # Andreas: Wieso versuchst du dies zu laden? Das Modul gibt es nicht und wird unten auch nicht verwendet
 
 
 class ExportTest(unittest.TestCase):
