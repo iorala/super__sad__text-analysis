@@ -2,12 +2,12 @@
 from flask import Flask, redirect, render_template, request, flash, session
 import os
 import uuid
+import joblib
 from collections import defaultdict
 import pandas as pd
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'uploads/'
-
 
 # Komponenten laden
 
@@ -19,7 +19,7 @@ from Komponenten.Import.Import_and_Control import DataImport, DataControl
 
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
-from Komponenten.Textanalyse.Sentiment import Sentiments
+from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentDataFrame
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
@@ -89,16 +89,14 @@ def import_anzeigen():
             flash('Keine Datei ausgewählt')
             return redirect(request.url)
         # Datei speichern
-        datei_id = str(uuid.uuid4())
-        dateiname = datei_id + "_" + secure_filename(csv_datei.filename)
-        session['dateiname'] = os.path.join(app.config['UPLOAD_FOLDER'], dateiname)
-        csv_datei.save(session['dateiname'])
+        datei_id_csv = str(uuid.uuid4())
+        session['dateiname_csv'] = datei_id_csv + "_" + secure_filename(csv_datei.filename)
+        csv_datei.save(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         data_importer = DataImport()
-        data_importer.import_data(session['dateiname'])
+        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         csv_tabelle = bs_tabelle_aus_df(data_importer.get_dataframe().head())
-        #session['dateiname'] = os.path.join(app.config['UPLOAD_FOLDER'], dateiname)
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
-    return("Keine Formular erhalten")
+    return ("Keine Formular erhalten")
 
 
 # - Sentiment Analysis
@@ -107,10 +105,28 @@ def import_anzeigen():
 #     - → Button für Visualize
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
-    # Blah blah
-    
-    return session['dateiname']
-    #return render_template("textanalyse.html")
+    if request.method == "POST":
+        # Korpus erstellen
+        corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
+        print(corpus)
+        rows = corpus.read_csv_file()
+
+        # Sentimentanalyse durchführen
+        analyzer = Sentiments(rows)
+
+        sentiments = analyzer.get_sentiments()
+
+        # DataFrame wird erstellt:
+        sentiment_dataframe = SentimentDataFrame(rows)
+        sentiment_dataframe.create_dataframe(sentiments)
+        sentiments_df = sentiment_dataframe.get_dataframe()
+        sentiment_tabelle = bs_tabelle_aus_df(sentiments_df.head())
+
+        # DataFrame wird gespeichert
+        session['dateiname_sent'] = session['dateiname_csv'] + '_sent.pkl'
+        joblib.dump(sentiments_df, os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
+
+        return render_template("textanalyse.html", sentiment_tabelle=sentiment_tabelle)
 
 
 # - Visualize

@@ -1,3 +1,21 @@
 {% include "header.html" %}
 <!--Inhalt der Seite-->
+{% include "header.html" %}
+<!--Inhalt der Seite-->
+<div class="row">
+    <div class="col">
+        <form action="{{url_for('visualisierung')}}" method="post" enctype="multipart/form-data">
+            <h2>Sentimentanalyse</h2>
+            <p>Erste zehn Zeilen der Sentimentanalyse</p>
+            <div class="container">
+                <div class = "row">
+                    {{ sentiment_tabelle | safe}}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Texte analysieren</button>
+        </form>
+    </div>
+</div>
+{% include "footer.html" %}
+
 {% include "footer.html" %}

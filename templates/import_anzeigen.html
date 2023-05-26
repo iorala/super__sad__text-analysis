@@ -4,7 +4,7 @@
     <div class="col">
         <form action="{{url_for('textanalyse')}}" method="post" enctype="multipart/form-data">
             <h2>Anzeige der hochgeladenen Texte</h2>
-            <p>Erste zehn Zeilen der Textdatei/p>
+            <p>Erste zehn Zeilen der Textdatei</p>
             <div class="container">
                 <div class = "row">
                     {{ csv_tabelle | safe}}
