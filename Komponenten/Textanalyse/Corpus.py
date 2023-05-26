@@ -6,7 +6,7 @@ class Corpus:
 
     #CSV einlesen und in einer Liste speichern
     def read_csv_file(self):
-        with open(self.filename) as file:
+        with open(self.filename, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             rows = []
             for row in reader:
