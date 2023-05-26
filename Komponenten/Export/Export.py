@@ -1,5 +1,3 @@
-# import Visualization # Andreas: Wieso versuchst du dies zu laden? Das Modul gibt es nicht und wird unten auch nicht verwendet
-
 class Export:
     def __init__(self, name: str, data: bytes):
         self.name = name
