@@ -12,11 +12,11 @@ data_importer.import_data(file_name)
 # - check_string_values wird hier nie ausgeführt, sofern check_column_count True ist
 # - Wenn du beides möchtes musst du es auseinandernehmen
 # - Wenn es voneinander abhängen soll, musst du evtl. die Bedingungen umdrehen
-if DataControl.check_column_count(file_name):
-    print("Data control successful.")
-    if DataControl.check_string_values(file_name):
-        print("All values are strings.")
-    else:
-        print("Error: Non-string values found in the CSV file.")
+if DataControl.check_column_count(file_name) and DataControl.check_string_values(file_name):
+    print("Datenkontrolle erfolgreich.")
+    print("Alle Werte sind Zeichenketten.")
 else:
-    print("Error: Multiple columns found in the CSV file.")
+    if not DataControl.check_column_count(file_name):
+        print("Fehler: Mehrere Spalten in der CSV-Datei gefunden.")
+    if not DataControl.check_string_values(file_name):
+        print("Fehler: Nicht-zeichenketten Werte in der CSV-Datei gefunden.")
