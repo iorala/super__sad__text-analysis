@@ -108,7 +108,6 @@ def textanalyse():
     if request.method == "POST":
         # Korpus erstellen
         corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        print(corpus)
         rows = corpus.read_csv_file()
 
         # Sentimentanalyse durchführen
@@ -139,6 +138,12 @@ def textanalyse():
 @app.route('/visualisierung', methods=["GET", "POST"])
 def visualisierung():
     # Blah blah
+    if request.method == "POST":
+        # Daten laden
+        sentiment_dataframe = joblib.load(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
+        if request.form['chart_type'] == 'bar':
+
+        return request.form.keys()
     return render_template("visualisierung.html")
 
 

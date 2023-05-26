@@ -1,7 +1,7 @@
 # Project specific exclusion
 ## Test-Dateien
 test
-test.csv
+# test.csv
 ## Ordner für uploads
 uploads/
 
