@@ -37,18 +37,18 @@ class DataImport:
         return file_size
 
     def display_file_info(self):
-        print("File Name:", self.file_name)
-        print("File Format:", self.file_format)
-        print("File Size:", self.file_size, "bytes")
+        print("Dateiname:", self.file_name)
+        print("Dateiformat:", self.file_format)
+        print("Dateigröße:", self.file_size, "Bytes")
 
     def import_success_message(self):
-        print("Data import successful.")
+        print("Datenimport erfolgreich.")
 
     def import_error_message(self):
-        print("Error: File not found or incorrect file path.")
+        print("Fehler: Datei nicht gefunden oder falscher Dateipfad.")
 
     def column_error_message(self):
-        print("Error: Multiple columns found in the CSV file. Only one column is allowed.")
+        print("Fehler: Mehrere Spalten in der CSV-Datei gefunden. Es ist nur eine Spalte erlaubt.")
 
     def display_data(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
@@ -71,8 +71,6 @@ class DataControl:
             else:
                 return False
 
-
-
 # Verwendung der Klassen, Import der Datei und Datenkontrolle
 file_name = "ImportSAD.csv"
 
@@ -80,11 +78,11 @@ data_importer = DataImport()
 data_importer.import_data(file_name)
 
 if DataControl.check_column_count(file_name):
-    print("Data control successful. Only one column found.")
+    print("Datenkontrolle erfolgreich. Es wurde nur eine Spalte gefunden.")
 else:
-    print("Error: Multiple columns found in the CSV file.")
-    
-    
+    print("Fehler: Mehrere Spalten in der CSV-Datei gefunden.")
+
+
 #Test2    
 import os
 import csv
@@ -124,18 +122,18 @@ class DataImport:
         return file_size
 
     def display_file_info(self):
-        print("File Name:", self.file_name)
-        print("File Format:", self.file_format)
-        print("File Size:", self.file_size, "bytes")
+        print("Dateiname:", self.file_name)
+        print("Dateiformat:", self.file_format)
+        print("Dateigröße:", self.file_size, "Bytes")
 
     def import_success_message(self):
-        print("Data import successful.")
+        print("Datenimport erfolgreich.")
 
     def import_error_message(self):
-        print("Error: File not found or incorrect file path.")
+        print("Fehler: Datei nicht gefunden oder falscher Dateipfad.")
 
     def column_error_message(self):
-        print("Error: Multiple columns found in the CSV file. Only one column is allowed.")
+        print("Fehler: Mehrere Spalten in der CSV-Datei gefunden. Es ist nur eine Spalte erlaubt.")
 
     def display_data(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
@@ -158,8 +156,6 @@ class DataControl:
             else:
                 return False
 
-
-
 # Verwendung der Klassen, Import der Datei und Datenkontrolle
 file_name = "ImportSAD2.csv"
 
@@ -167,10 +163,10 @@ data_importer = DataImport()
 data_importer.import_data(file_name)
 
 if DataControl.check_column_count(file_name):
-    print("Data control successful. Only one column found.")
+    print("Datenkontrolle erfolgreich. Es wurde nur eine Spalte gefunden.")
 else:
-    print("Error: Multiple columns found in the CSV file.")
-   
+    print("Fehler: Mehrere Spalten in der CSV-Datei gefunden.")
+
 
 #Test3
 
@@ -212,18 +208,18 @@ class DataImport:
         return file_size
 
     def display_file_info(self):
-        print("File Name:", self.file_name)
-        print("File Format:", self.file_format)
-        print("File Size:", self.file_size, "bytes")
+        print("Dateiname:", self.file_name)
+        print("Dateiformat:", self.file_format)
+        print("Dateigröße:", self.file_size, "Bytes")
 
     def import_success_message(self):
-        print("Data import successful.")
+        print("Datenimport erfolgreich.")
 
     def import_error_message(self):
-        print("Error: File not found or incorrect file path.")
+        print("Fehler: Datei nicht gefunden oder falscher Dateipfad.")
 
     def column_error_message(self):
-        print("Error: Multiple columns found in the CSV file. Only one column is allowed.")
+        print("Fehler: Mehrere Spalten in der CSV-Datei gefunden. Es ist nur eine Spalte erlaubt.")
 
     def display_data(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
@@ -246,8 +242,6 @@ class DataControl:
             else:
                 return False
 
-
-
 # Verwendung der Klassen, Import der Datei und Datenkontrolle
 file_name = "ImportSAD3.csv"
 
@@ -255,7 +249,6 @@ data_importer = DataImport()
 data_importer.import_data(file_name)
 
 if DataControl.check_column_count(file_name):
-    print("Data control successful. Only one column found.")
+    print("Datenkontrolle erfolgreich. Es wurde nur eine Spalte gefunden.")
 else:
-    print("Error: Multiple columns found in the CSV file.")
-    
+    print("Fehler: Mehrere Spalten in der CSV-Datei gefunden.")
