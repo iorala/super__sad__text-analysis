@@ -1,4 +1,17 @@
 {% include "header.html" %}
 <!--Inhalt der Seite-->
-{{ csv_tabelle | safe}}
+<div class="row">
+    <div class="col">
+        <form action="{{url_for('textanalyse')}}" method="post" enctype="multipart/form-data">
+            <h2>Anzeige der hochgeladenen Texte</h2>
+            <p>Erste zehn Zeilen der Textdatei/p>
+            <div class="container">
+                <div class = "row">
+                    {{ csv_tabelle | safe}}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Texte analysieren</button>
+        </form>
+    </div>
+</div>
 {% include "footer.html" %}

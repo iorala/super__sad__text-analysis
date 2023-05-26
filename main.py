@@ -1,6 +1,7 @@
 # benötigte Module importieren
 from flask import Flask, redirect, render_template, request, flash, session
 import os
+import uuid
 from collections import defaultdict
 import pandas as pd
 from werkzeug.utils import secure_filename
@@ -16,7 +17,6 @@ from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df, upload_verzeichnis_e
 # Datenimport
 from Komponenten.Import.Import_and_Control import DataImport, DataControl
 
-
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
 from Komponenten.Textanalyse.Sentiment import Sentiments
@@ -28,18 +28,18 @@ from Komponenten.Export.Export import Export
 from Komponenten.Export.Image_data import ImageData
 from Komponenten.Export.PNG_Exporter import PNGExporter
 
-
-# name der Applikation
-app = Flask("super__sad__text_analysis")
-app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45622'
-UPLOAD_FOLDER = 'uploads/'
-upload_verzeichnis_erstellen(UPLOAD_FOLDER)
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 # Globale Variablen und Funktionen
 app_titel = "super().__sad__(text_analysis)"
 variable = "Inhalt"
+UPLOAD_FOLDER = 'uploads/'
+
+# Applikation initialisieren
+app = Flask("super__sad__text_analysis")
+app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45622'
+
+# Verzeichnis zum speichern der Nutzerdaten
+upload_verzeichnis_erstellen(UPLOAD_FOLDER)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 # GUI entwickeln:
@@ -89,11 +89,14 @@ def import_anzeigen():
             flash('Keine Datei ausgewählt')
             return redirect(request.url)
         # Datei speichern
-        dateiname = secure_filename(csv_datei.filename)
-        csv_datei.save(os.path.join(app.config['UPLOAD_FOLDER'], dateiname))
+        datei_id = str(uuid.uuid4())
+        dateiname = datei_id + "_" + secure_filename(csv_datei.filename)
+        session['dateiname'] = os.path.join(app.config['UPLOAD_FOLDER'], dateiname)
+        csv_datei.save(session['dateiname'])
         data_importer = DataImport()
-        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], dateiname))
+        data_importer.import_data(session['dateiname'])
         csv_tabelle = bs_tabelle_aus_df(data_importer.get_dataframe().head())
+        #session['dateiname'] = os.path.join(app.config['UPLOAD_FOLDER'], dateiname)
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
     return("Keine Formular erhalten")
 
@@ -105,7 +108,9 @@ def import_anzeigen():
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
     # Blah blah
-    return render_template("textanalyse.html")
+    
+    return session['dateiname']
+    #return render_template("textanalyse.html")
 
 
 # - Visualize
