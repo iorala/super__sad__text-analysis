@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from Komponenten.Import.Import_and_Control import DataImport, DataControl
+from Komponenten.Import.Import_and_Control import DataImport, DataControl, Import_Constants
 from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentResult
-from Komponenten.Visualisierung.DataVisualiser_1 import DataVisualiser_1
+from Komponenten.Visualisierung.DataVisualiser_1 import DataVisualiser
 
 
 class IntegrationTest(unittest.TestCase):
@@ -61,7 +61,7 @@ class IntegrationTest(unittest.TestCase):
 
     def test_data_visualiser(self):
         data = {'Sentiment': ['Positiv', 'Negativ', 'Neutral'], 'Count': [10, 5, 3]}
-        visualiser = DataVisualiser_1(data)
+        visualiser = DataVisualiser(data)
 
         bar_chart = visualiser.plot_bar_chart()
         pie_chart = visualiser.plot_pie_chart()

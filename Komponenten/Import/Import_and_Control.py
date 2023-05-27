@@ -3,14 +3,14 @@ import csv
 import pandas as pd
 from Import_Constants import Import_Constants
 
+
 class DataImport:
     def __init__(self):
         self.file_name = ""
         self.file_format = ""
         self.file_size = 0
-        Constants = Import_Constants()
-        self.status = Constants.NOT_STARTED
-
+        self.constants = Import_Constants()
+        self.status = self.constants.NOT_STARTED
 
     def import_data(self, file_name):
         if self.check_file_exists(file_name):
@@ -19,12 +19,12 @@ class DataImport:
             self.file_size = self.get_file_size(file_name)
             self.display_file_info()
             if DataControl.check_column_count(file_name):
-                self.status = Import_Constants.SUCCESS
-                #self.get_rows()
+                self.status = self.constants.SUCCESS
+                # self.get_rows()
             else:
-                self.status = Import_Constants.COLUMN_ERROR
+                self.status = self.constants.COLUMN_ERROR
         else:
-            self.status = Import_Constants.FILE_NOT_FOUND
+            self.status = self.constants.FILE_NOT_FOUND
 
     def check_file_exists(self, file_name):
         if os.path.isfile(file_name):
@@ -57,7 +57,6 @@ class DataImport:
     # Für die Webui benötige ich ein Dataframe und kein Print-Funktionen
     def get_dataframe(self):
         return pd.read_csv(self.file_name, header=None)
-
 
 
 class DataControl:
