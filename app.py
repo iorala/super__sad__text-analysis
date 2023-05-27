@@ -73,7 +73,7 @@ def hello_world(eingabe):
 # FORM → Request and view upload
 @app.route('/')
 def home():
-    titel = "Textanalyse"
+    titel = "Texte hochladen"
     return render_template("main.html", titel=titel)
 
 
@@ -83,7 +83,7 @@ def home():
 #     - →Button für Versand an Sentiment Analysis
 @app.route('/import_anzeigen', methods=["GET", "POST"])
 def import_anzeigen():
-    titel = "Importierte Text"
+    titel = "Importierte Texte"
     if request.method == "POST":
         if 'csv_datei' not in request.files:
             flash('Keine Datei erhalten')
@@ -110,6 +110,7 @@ def import_anzeigen():
 #     - → Button für Visualize
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
+    titel="Texte analysieren"
     if request.method == "POST":
         # Korpus erstellen
         corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
@@ -130,7 +131,7 @@ def textanalyse():
         session['dateiname_sent'] = session['dateiname_csv'] + '_sent.pkl'
         joblib.dump(sentiments_df, os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
 
-        return render_template("textanalyse.html", sentiment_tabelle=sentiment_tabelle)
+        return render_template("textanalyse.html", sentiment_tabelle=sentiment_tabelle, titel=titel)
 
 
 # - Visualize
