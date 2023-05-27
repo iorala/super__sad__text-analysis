@@ -1,5 +1,6 @@
 import pandas as pd
 import plotly.express as px
+from Sentiments import sentiment_result
 
 class DataVisualiser:
     def __init__(self, data):
@@ -25,11 +26,9 @@ class DataVisualiser:
         table = pd.DataFrame(self.data)
         return table
 
-# Beispielverwendung der Klasse mit dem Dataframe "sentiments_df"
-sentiments_df = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
-                              "Count": [30, 20, 50]})
-sentiments_df.set_index("Sentiment", inplace=True)
-visualizer = DataVisualiser(sentiments_df)
+
+sentiment_result.set_index("Sentiment", inplace=True)
+visualizer = DataVisualiser(sentiment_result)
 
 fig = visualizer.plot_bar_chart()
 fig = visualizer.plot_pie_chart()
