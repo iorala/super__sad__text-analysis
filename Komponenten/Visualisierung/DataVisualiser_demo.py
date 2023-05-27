@@ -12,8 +12,8 @@ sentiments_df.set_index("Sentiment", inplace=True)
 visualizer = DataVisualiser(sentiments_df)
 
 #
-visualizer.plot_bar_chart()
+#visualizer.plot_bar_chart()
 #
-# visualizer.plot_pie_chart()
+#visualizer.plot_pie_chart()
 #
-# visualizer.display_table()
+visualizer.display_table()
