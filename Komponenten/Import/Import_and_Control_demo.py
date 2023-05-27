@@ -3,7 +3,7 @@
 from Import_and_Control import DataControl, DataImport
 
 # # Verwendung der Klassen, Import der Datei und Datenkontrolle
-file_name = "ImportSAD2.csv"
+file_name = "ImportSAD.csv"
 
 data_importer = DataImport()
 data_importer.import_data(file_name)
