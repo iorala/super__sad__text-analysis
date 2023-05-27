@@ -54,9 +54,10 @@ class DataImport:
     def display_data(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
+            rows = []
             for row in reader:
-                 if row:
-                    print(row[0])
+                rows.append(row)
+            return rows
 
     # Für die Webui benötige ich ein Dataframe und kein Print-Funktionen
     def get_dataframe(self):
