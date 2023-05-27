@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from Komponenten.Import.Import_and_Control import DataImport, DataControl
 from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentResult
-from Komponenten.Visualisierung.DataVisualiser import DataVisualiser_1
+from Komponenten.Visualisierung.DataVisualiser_1 import DataVisualiser_1
 
 
 class IntegrationTest(unittest.TestCase):
