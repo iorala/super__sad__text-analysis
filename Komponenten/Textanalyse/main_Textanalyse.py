@@ -21,9 +21,9 @@ def main():
 
     # Dict wird erstellt:
     sentiment_dataframe = SentimentResult(rows)
-
+    sentiment_dataframe.create_dataframe(sentiments)
     #Test, wie sieht das DataFrame aus:
-    print(sentiment_dataframe.sentiments_result)
+    print(sentiment_dataframe.result_dict)
     #print(sentiments_df['Sentiment'])
 
 

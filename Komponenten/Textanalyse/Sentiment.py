@@ -41,6 +41,9 @@ class SentimentResult:
     def create_dataframe(self, sentiments):
         self.sentiments_df = pd.DataFrame({"Text": [row[0] for row in self.rows if row], "Sentiment": sentiments})
         self.sentiments_result = self.sentiments_df['Sentiment'].value_counts().to_dict()
+        self.result_dict = {"Sentiment": list(self.sentiments_result.keys()), "Count": list(self.sentiments_result.values())}
+
+
 
 
 
