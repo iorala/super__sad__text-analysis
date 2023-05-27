@@ -1,12 +1,16 @@
 import os
 import csv
 import pandas as pd
+from Import_Constants import Import_Constants
 
 class DataImport:
     def __init__(self):
         self.file_name = ""
         self.file_format = ""
         self.file_size = 0
+        Constants = Import_Constants()
+        self.status = Constants.NOT_STARTED
+
 
     def import_data(self, file_name):
         if self.check_file_exists(file_name):
@@ -15,12 +19,12 @@ class DataImport:
             self.file_size = self.get_file_size(file_name)
             self.display_file_info()
             if DataControl.check_column_count(file_name):
-                self.import_success_message()
-                self.display_data()
+                self.status = Import_Constants.SUCCESS
+                #self.get_rows()
             else:
-                self.column_error_message()
+                self.status = Import_Constants.COLUMN_ERROR
         else:
-            self.import_error_message()
+            self.status = Import_Constants.FILE_NOT_FOUND
 
     def check_file_exists(self, file_name):
         if os.path.isfile(file_name):
@@ -42,16 +46,7 @@ class DataImport:
         print("File Format:", self.file_format)
         print("File Grösse:", self.file_size, "bytes")
 
-    def import_success_message(self):
-        print("Daten Import erfolgreich.")
-
-    def import_error_message(self):
-        print("Fehler: File konnte nicht gefunden werden oder falscher Dateipfad.")
-
-    def column_error_message(self):
-        print("Fehler: Mehrere Spalten in der Datei vorhanden. Es ist nur eine Spalte mit Inputs erlaubt.")
-
-    def display_data(self):
+    def get_rows(self):
         with open(self.file_name, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             rows = []

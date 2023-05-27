@@ -7,6 +7,8 @@ file_name = "ImportSAD.csv"
 
 data_importer = DataImport()
 data_importer.import_data(file_name)
+print(data_importer.status)
+print(data_importer.get_rows())
 
 # Kommentar Andreas:
 # - check_string_values wird hier nie ausgeführt, sofern check_column_count True ist
