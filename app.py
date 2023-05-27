@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 # Punkt-Tokenizer aus dem nltk-Modul importieren, da dieser für die Textanalyse benötigt wird
 # wird auf heroku von textblob_de nicht installiert
 import nltk
-nltk.download('punkt')
+#nltk.download('punkt')
 
 UPLOAD_FOLDER = 'uploads/'
 
