@@ -141,7 +141,6 @@ def visualisierung():
         # Daten laden
         sentiment_dataframe = joblib.load(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
         # if request.form['chart_type'] == 'bar':
-
     return render_template("visualisierung.html")
 
 
