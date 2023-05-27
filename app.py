@@ -14,6 +14,9 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'uploads/'
 
+# Nachrichten laden
+from Messages import Messages
+
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
@@ -24,7 +27,7 @@ from Komponenten.Import.Import_and_Control import DataImport, DataControl
 
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
-from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentDataFrame
+from Komponenten.Textanalyse.Sentiment import Sentiments
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
