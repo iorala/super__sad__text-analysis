@@ -1,6 +1,6 @@
 from Corpus import Corpus
 from Sentiment import Sentiments
-from Sentiment import SentimentDataFrame
+from Sentiment import SentimentResult
 
 
 def main():
@@ -15,14 +15,16 @@ def main():
     analyzer = Sentiments(rows)
     sentiments = analyzer.get_sentiments()
 
-    # DataFrame wird erstellt:
-    sentiment_dataframe = SentimentDataFrame(rows)
-    sentiment_dataframe.create_dataframe(sentiments)
-    sentiments_df = sentiment_dataframe.get_dataframe()
+    # Results
+    #SentimentResult.create_amount_sentiment()
+    #print(SentimentResult.sentiments_result())
+
+    # Dict wird erstellt:
+    sentiment_dataframe = SentimentResult(rows)
 
     #Test, wie sieht das DataFrame aus:
-    print(sentiments_df.head())
-    print(sentiments_df['Sentiment'])
+    print(sentiment_dataframe.sentiments_result)
+    #print(sentiments_df['Sentiment'])
 
 
 

@@ -32,17 +32,15 @@ class Sentiments:
 
 # -------------------------------------------------------------------------------------------------------
 
-
-class SentimentDataFrame:
+class SentimentResult:
     def __init__(self, rows):
         self.rows = rows
         self.sentiments_df = None
 
     # Die importierten Daten werden mit den Klassifikationen aus der Sentiment-Analyse in ein DataFrame gespeichert
     def create_dataframe(self, sentiments):
-        # self.sentiments_df = pd.DataFrame({"Text": [row[0] for row in self.rows], "Sentiment": sentiments})
-        # Andreas: Auch hier funktioniert es sonst nicht, wenn die Zeile leer ist
         self.sentiments_df = pd.DataFrame({"Text": [row[0] for row in self.rows if row], "Sentiment": sentiments})
+        self.sentiments_result = self.sentiments_df['Sentiment'].value_counts().to_dict()
 
-    def get_dataframe(self):
-        return self.sentiments_df
+
+
