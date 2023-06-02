@@ -1,5 +1,5 @@
 import pandas as pd
-from Sentiment import SentimentDataFrame
+from Komponenten.Textanalyse.Sentiment import SentimentResult, SentimentAnalyse
 
 from DataVisualiser import DataVisualiser
 # Beispielverwendung der Klasse mit dem Dataframe "sentiments_df"

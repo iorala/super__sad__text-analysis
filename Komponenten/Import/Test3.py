@@ -1,4 +1,4 @@
-from Import_and_Control import DataControl, DataImport
+from Komponenten.Import.Import_and_Control import DataControl, DataImport
 
 # Verwendung der Klassen, Import der Datei und Datenkontrolle
 file_name = "ImportSAD3.csv"
