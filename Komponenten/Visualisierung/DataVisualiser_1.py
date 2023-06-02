@@ -1,6 +1,6 @@
 import pandas as pd
 import plotly.express as px
-from Sentiments import sentiment_result
+from Sentiment import SentimentResult
 
 class DataVisualiser:
     def __init__(self, data):
