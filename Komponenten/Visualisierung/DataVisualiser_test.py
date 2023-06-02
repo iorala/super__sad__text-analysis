@@ -1,4 +1,4 @@
-import DataVisualiser_px
+import DataVisualiser
 import pandas as pd
 from DataVisualiser import VisualisationHandler
 from DataVisualiser import DataVisualiser
