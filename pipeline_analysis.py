@@ -4,6 +4,7 @@ from Komponenten.Import.Import_and_Control import DataImport, Import_Constants
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 
+
 def main(datei):
     print("Starte Pipeline")
 
@@ -47,4 +48,3 @@ def main(datei):
 if __name__ == "__main__":
     nltk.download('punkt')  # Lade das 'punkt'-Ressourcenpaket herunter
     main("test.csv")
-

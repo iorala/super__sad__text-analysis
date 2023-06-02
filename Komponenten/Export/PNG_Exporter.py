@@ -1,4 +1,4 @@
-from .Export import Export
+from Komponenten.Export.Export import Export
 
 
 class PNGExporter(Export):
