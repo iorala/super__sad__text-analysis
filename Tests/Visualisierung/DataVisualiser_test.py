@@ -1,3 +1,4 @@
+#Für Visualisierung Teil Test und Demo sind gleich, also in diesem File
 import DataVisualiser
 import pandas as pd
 from DataVisualiser import VisualisationHandler
