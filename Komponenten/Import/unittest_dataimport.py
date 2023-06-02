@@ -12,7 +12,7 @@ class TestDataImport(unittest.TestCase):
         self.assertTrue(self.data_import.check_file_exists(file_name))
 
     def test_check_file_existsnot(self):
-        file_name = "test.csv"
+        file_name = "filedoesnotexist.csv"
         self.assertFalse(self.data_import.check_file_exists(file_name))
 
     def test_get_file_format(self):
@@ -29,11 +29,6 @@ class TestDataImport(unittest.TestCase):
         with patch('builtins.open', return_value=StringIO(csv_data)):
             self.assertTrue(DataControl.check_column_count(file_name))
 
-    def test_check_string_values(self):
-        file_name = "importSAD.csv"
-        csv_data = "header1,header2\nvalue1,value2\nvalue3,123"
-        with patch('builtins.open', return_value=StringIO(csv_data)):
-            self.assertFalse(DataControl.check_string_values(file_name))
 
 if __name__ == '__main__':
     unittest.main()

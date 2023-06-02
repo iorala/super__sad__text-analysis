@@ -1,8 +1,8 @@
 import os
 import csv
 import pandas as pd
-from Komponenten.Import.Import_Constants import Import_Constants
-from Komponenten.Visitor import Visitor
+from Import_Constants import Import_Constants
+from Visitor import Visitor
 
 
 class DataImport:
@@ -78,19 +78,6 @@ class DataControl:
             else:
                 return False
 
-    @staticmethod
-    def check_string_values(file_name):
-        with open(file_name, 'r', encoding='utf-8') as file:
-            reader = csv.reader(file, delimiter=";")
-            header = next(reader, None)
-            if len(header) == 1:
-                for row in reader:
-                    if any(not isinstance(cell, str) for cell in row):
-                        return False
-                return True
-            else:
-                return False
 
 # Kommentar Andreas: Bitte kein Beispielcode in den Klassendefinitionen, sonst kann ich diese in der UI nicht laden
 # → nach Import_and_Control_demo.py verschoben
-
