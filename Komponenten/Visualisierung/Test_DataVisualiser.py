@@ -1,7 +1,7 @@
 import DataVisualiser_px
 import pandas as pd
-from DataVisualiser_px import VisualisationHandler
-from DataVisualiser_px import DataVisualiser
+from DataVisualiser import VisualisationHandler
+from DataVisualiser import DataVisualiser
 
 sentiments_df = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
                               "Count": [30, 20, 50]})
