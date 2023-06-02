@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from Komponenten.Import.Import_and_Control import DataImport, DataControl, Import_Constants
-from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentResult
+from Komponenten.Textanalyse.Sentiment import SentimentAnalyse, SentimentResult
 from Komponenten.Visualisierung.DataVisualiser_1 import DataVisualiser
 
 
@@ -47,7 +47,7 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(string_values_result, True)
 
     def test_sentiments(self):
-        sentiments = Sentiments(self.test_data)
+        sentiments = SentimentAnalyse(self.test_data)
         result = sentiments.get_sentiments()
 
         expected_result = ['Positiv', 'Negativ', 'Neutral']

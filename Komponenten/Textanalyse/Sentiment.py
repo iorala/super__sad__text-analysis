@@ -1,9 +1,13 @@
 from textblob_de import TextBlobDE
 import pandas as pd
+from collections import Counter
 
 
-class Sentiments:
-    def __init__(self, rows):
+class SentimentAnalyse: # in SentimentAnalyse umbenennen
+    def __init__(self):
+        self.rows = None
+
+    def set_rows(self, rows):
         self.rows = rows
 
     def analyze_sentiment(self, text):
@@ -21,28 +25,37 @@ class Sentiments:
 
     # Jeder Zeile wird eine Klassifikation mittels analyse_sentiment zugewiesen. Das Resultat wir in einer Liste gespeichert.
     def get_sentiments(self):
+        # prüfen, ob self.rows wahr ist
         sentiments = []
         for row in self.rows:
             # Andreas: der Code stürzt sonst ab, wenn die Zeile leer ist
             if row:
                 sentiment = self.analyze_sentiment(row[0])
+                print(sentiment)
                 sentiments.append(sentiment)
-        return sentiments
+        sentiment_result = SentimentResult()
+        sentiment_result.positiv_count = sentiments.count('Positiv')
+        sentiment_result.negativ_count = sentiments.count('Negativ')
+        sentiment_result.neutral_count = sentiments.count('Neutral')
+        return sentiment_result
 
 
 # -------------------------------------------------------------------------------------------------------
 
 class SentimentResult:
-    def __init__(self, rows):
-        self.rows = rows
-        self.sentiments_df = None
+    def __init__(self):
+        self.positiv_count = -1
+        self.negativ_count = -1
+        self.neutral_count = -1
 
     # Die importierten Daten werden mit den Klassifikationen aus der Sentiment-Analyse in ein DataFrame gespeichert
-    def create_dataframe(self, sentiments):
-        self.sentiments_df = pd.DataFrame({"Text": [row[0] for row in self.rows if row], "Sentiment": sentiments})
-        self.sentiments_result = self.sentiments_df['Sentiment'].value_counts().to_dict()
-        self.result_dict = {"Sentiment": list(self.sentiments_result.keys()), "Count": list(self.sentiments_result.values())}
-
+    def get_result_as_dict(self):
+        sentiment_counts = {
+            'Positiv': self.positiv_count,
+            'Negativ': self.negativ_count,
+            'Neutral': self.neutral_count
+        }
+        return sentiment_counts
 
 
 

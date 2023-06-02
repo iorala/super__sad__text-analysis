@@ -1,5 +1,5 @@
 from Komponenten.Import.Import_and_Control import DataImport, DataControl, Import_Constants
-from Komponenten.Textanalyse.Sentiment import Sentiments, SentimentResult
+from Komponenten.Textanalyse.Sentiment import SentimentAnalyse, SentimentResult
 from Komponenten.Visualisierung.DataVisualiser_1 import DataVisualiser
 
 

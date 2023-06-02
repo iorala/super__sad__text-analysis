@@ -27,7 +27,7 @@ from Komponenten.Import.Import_and_Control import DataImport, DataControl
 
 # Textanalyse
 from Komponenten.Textanalyse.Corpus import Corpus
-from Komponenten.Textanalyse.Sentiment import Sentiments
+from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
@@ -120,7 +120,7 @@ def textanalyse():
         rows = corpus.read_csv_file()
 
         # Sentimentanalyse durchführen
-        analyzer = Sentiments(rows)
+        analyzer = SentimentAnalyse(rows)
 
         sentiments = analyzer.get_sentiments()
 

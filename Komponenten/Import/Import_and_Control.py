@@ -93,3 +93,4 @@ class DataControl:
 
 # Kommentar Andreas: Bitte kein Beispielcode in den Klassendefinitionen, sonst kann ich diese in der UI nicht laden
 # → nach Import_and_Control_demo.py verschoben
+

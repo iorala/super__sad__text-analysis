@@ -1,32 +1,19 @@
-from Corpus import Corpus
-from Sentiment import Sentiments
-from Sentiment import SentimentResult
+import sys
+sys.path.append(r'C:\Users\sarak\Documents\GitHub\super__sad__text-analysis')
+from Komponenten.Import.Import_and_Control import DataImport
+from Sentiment import SentimentAnalyse, SentimentResult
 
+data_importer = DataImport()
+data_importer.import_data("test.csv")
+rows = data_importer.get_rows()
+print(rows)
+sentiment_analyse = SentimentAnalyse()
+sentiment_analyse.set_rows(rows)
 
-def main():
-    #Filename wird von Import geliefert
-    filename = 'test.csv'
+sentiment_result = sentiment_analyse.get_sentiments()
+print(sentiment_result.get_result_as_dict())
 
-    # Korpus erstellen
-    corpus = Corpus(filename)
-    rows = corpus.read_csv_file()
-
-    # Sentimentanalyse durchführen
-    analyzer = Sentiments(rows)
-    sentiments = analyzer.get_sentiments()
-
-    # Results
-    #SentimentResult.create_amount_sentiment()
-    #print(SentimentResult.sentiments_result())
-
-    # Dict wird erstellt:
-    sentiment_dataframe = SentimentResult(rows)
-    sentiment_dataframe.create_dataframe(sentiments)
-    #Test, wie sieht das DataFrame aus:
-    print(sentiment_dataframe.result_dict)
-    #print(sentiments_df['Sentiment'])
-
-
-
-if __name__ == '__main__':
-    main()
+#print(rows)
+#counter = SentimentResult(rows)
+#sentiment_counts = counter.count_sentiments()
+#print(sentiment_counts)
