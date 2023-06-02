@@ -1,8 +1,8 @@
 import os
 import csv
 import pandas as pd
-from Import_Constants import Import_Constants
-from Visitor import Visitor
+from Komponenten.Import.Import_Constants import Import_Constants
+from Komponenten.Visitor import Visitor
 
 
 class DataImport:
