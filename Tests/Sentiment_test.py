@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
-from Sentiment import SentimentResult
-from Sentiment import SentimentAnalyse
+from Komponenten.Sentiment import SentimentResult
+from Komponenten.Sentiment import SentimentAnalyse
 
 class TestSentimentAnalyse(unittest.TestCase):
     def test_get_sentiments(self):
@@ -46,3 +46,4 @@ class TestSentimentResult(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
