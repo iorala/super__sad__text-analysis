@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
-from super__sad__text-analysis.Komponenten.Sentiment import SentimentResult
-from super__sad__text-analysis.Komponenten.Sentiment import SentimentAnalyse
+from Komponenten.Textanalyse.Sentiment import SentimentResult
+from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 
 class TestSentimentAnalyse(unittest.TestCase):
     def test_get_sentiments(self):
