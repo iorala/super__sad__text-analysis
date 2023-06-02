@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'C:\Users\sarak\Documents\GitHub\super__sad__text-analysis')
+sys.path.append(r'/super__sad__text-analysis')
 from Komponenten.Import.Import_and_Control import DataImport
 from Sentiment import SentimentAnalyse, SentimentResult
 
