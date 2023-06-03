@@ -26,10 +26,16 @@ class DataVisualiser:
         table = pd.DataFrame(self.data)
         return table
     
-    def save_file(self, fig, filename):
-        img_bytes = fig.to_image(format="png")
-        with io.open(filename, "wb") as f:
-            f.write(img_bytes)
+    # Speichere das Bar Chart als PNG-Datei
+    pio.write_image(vis_result.bar, "bar_chart.png")
+
+    # Speichere das Pie Chart als PNG-Datei
+    pio.write_image(vis_result.pie, "pie_chart.png")
+
+    # Speichere die Tabelle als PNG-Datei
+    table_fig = vis_result.table.to_image(format="png")
+    with open("table.png", "wb") as f:
+        f.write(table_fig)
     
 class VisResult:
     bar = None
