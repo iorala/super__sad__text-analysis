@@ -26,8 +26,10 @@ class DataVisualiser:
         table = pd.DataFrame(self.data)
         return table
     
-    def save_file(self, file_path):
-        self.data.to_csv(file_path, index=False)
+   def save_file(self, fig, filename):
+        img_bytes = fig.to_image(format="png")
+        with io.open(filename, "wb") as f:
+            f.write(img_bytes)
     
 class VisResult:
     bar = None
