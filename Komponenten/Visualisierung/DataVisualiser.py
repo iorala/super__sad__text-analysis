@@ -25,7 +25,10 @@ class DataVisualiser:
     def display_table(self):
         table = pd.DataFrame(self.data)
         return table
-
+    
+    def save_file(self, file_path):
+        self.data.to_csv(file_path, index=False)
+    
 class VisResult:
     bar = None
     pie = None
