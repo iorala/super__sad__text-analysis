@@ -7,5 +7,6 @@ class Messages:
             3: "Fehler: Mehrere Spalten in der Datei vorhanden. Es ist nur eine Spalte mit Inputs erlaubt.",
             4: "Fehler: Nicht-zeichenketten Werte in der CSV-Datei gefunden."
         }
-    def get_message(self, code):
+
+    def get_message(self,code):
         return self.messages[code]
