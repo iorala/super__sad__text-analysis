@@ -106,7 +106,7 @@ def import_anzeigen():
         data_importer = DataImport()
         data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         if data_importer.status != 0:
-            fehlermeldung = "Der import ist st Fehlgeschlagen. "
+            fehlermeldung = "Der import ist fehlgeschlagen. "
             fehlermeldung += meldungen.get_message(data_importer.status)
             return (fehlermeldung) # Hier muss noch eine Fehlerseite eingefügt werden
         csv_tabelle = bs_tabelle_aus_df(data_importer.get_dataframe().head())
@@ -122,8 +122,8 @@ def textanalyse():
     titel = "Texte analysieren"
     if request.method == "POST":
         # Korpus erstellen
-        #corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        #rows = corpus.read_csv_file()
+        corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
+        rows = corpus.read_csv_file()
 
         # Sentimentanalyse durchführen
         #analyzer = SentimentAnalyse(rows)
@@ -141,6 +141,7 @@ def textanalyse():
         #joblib.dump(sentiments_df, os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
 
         return render_template("textanalyse.html", sentiment_tabelle=sentiment_tabelle, titel=titel)
+    return (home())  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
 
 # - Visualize
