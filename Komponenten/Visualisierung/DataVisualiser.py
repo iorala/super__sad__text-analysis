@@ -3,12 +3,16 @@ import plotly.express as px
 import plotly.io as pio
 #from Sentiment import SentimentResult
 
+import pandas as pd
+import plotly.express as px
+#from Sentiment import SentimentResult
+
 class DataVisualiser:
     def __init__(self, data):
         self.data = data
 
     def plot_bar_chart(self):
-        fig_1 = px.bar(self.data, x=self.data.index, y="Count")
+        fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()))
         fig_1.update_layout(
             xaxis_title="Kategorien",
             yaxis_title="Werte",
@@ -17,27 +21,16 @@ class DataVisualiser:
         return fig_1
 
     def plot_pie_chart(self):
-        fig = px.pie(self.data, values="Count", names=self.data.index)
+        fig = px.pie(values=list(self.data.values()), names=list(self.data.keys()))
         fig.update_layout(
             title="Sentimentanalyse Ergebnis"
         )
         return fig
 
     def display_table(self):
-        table = pd.DataFrame(self.data)
+        table = pd.DataFrame(list(self.data.items()), columns=["Sentiment", "Count"])
         return table
-    
-    # Speichere das Bar Chart als PNG-Datei
-    pio.write_image(vis_result.bar, "bar_chart.png")
 
-    # Speichere das Pie Chart als PNG-Datei
-    pio.write_image(vis_result.pie, "pie_chart.png")
-
-    # Speichere die Tabelle als PNG-Datei
-    table_fig = vis_result.table.to_image(format="png")
-    with open("table.png", "wb") as f:
-        f.write(table_fig)
-    
 class VisResult:
     bar = None
     pie = None
@@ -47,11 +40,11 @@ class VisResult:
 
 
 class VisualisationHandler:
-    def __init__(self, data_df):
-        self.data_df = data_df
+    def __init__(self, data_dict):
+        self.data_dict = data_dict
 
     def handle_all(self):
-        visualizer = DataVisualiser(self.data_df)
+        visualizer = DataVisualiser(self.data_dict)
         result = VisResult()
         result.pie = visualizer.plot_pie_chart()
         result.bar = visualizer.plot_bar_chart()
