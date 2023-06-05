@@ -3,10 +3,9 @@ import pandas as pd
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
-sentiments_df = pd.DataFrame({"Sentiment": ['Positiv', 'Negativ', 'Neutral'],
-                              "Count": [30, 20, 50]})
-sentiments_df.set_index("Sentiment", inplace=True)
-visualizer = DataVisualiser(sentiments_df)
+sentiments_dict = {'Positiv':2, 'Negativ':1, 'Neutral':3}
+
+visualizer = DataVisualiser(sentiments_dict)
 
 fig_1 = visualizer.plot_bar_chart()
 fig = visualizer.plot_pie_chart()
