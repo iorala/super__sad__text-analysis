@@ -1,6 +1,5 @@
 import os
 import csv
-import pandas as pd
 from Komponenten.Import.Import_Constants import Import_Constants
 from Komponenten.Visitor import Visitor
 
@@ -55,10 +54,6 @@ class DataImport:
                 rows.append(row)
             return rows
 
-    # Für die Webui benötige ich ein Dataframe und kein Print-Funktionen
-    def get_dataframe(self):
-        return pd.read_csv(self.file_name, header=None)
-
     # Visitor Pattern für Erweiterungg der Importfunktionen
     def accept(self, visitor: Visitor):
         visitor.visit(self)
@@ -77,7 +72,3 @@ class DataControl:
                 return True
             else:
                 return False
-
-
-# Kommentar Andreas: Bitte kein Beispielcode in den Klassendefinitionen, sonst kann ich diese in der UI nicht laden
-# → nach Import_and_Control_demo.py verschoben
