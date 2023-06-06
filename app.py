@@ -109,7 +109,7 @@ def import_anzeigen():
             fehlermeldung = "Der import ist fehlgeschlagen. "
             fehlermeldung += meldungen.get_message(data_importer.status)
             return fehlermeldung  # Hier muss noch eine Fehlerseite eingefügt werden
-        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).dropna().head())
+        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).head())
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
@@ -126,19 +126,20 @@ def textanalyse():
         data_importer = DataImport()
         data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         rows = data_importer.get_rows()
+        print(rows)
 
         # Führe Sentiment-Analyse durch
         sentiment_analyse = SentimentAnalyse()
         sentiment_analyse.set_rows(rows)
         sentiment_result = sentiment_analyse.get_sentiments()
 
-        print(sentiment_analyse.rows)
         print(sentiment_analyse.sentiments)
 
+        sentiment_tabelle = bs_tabelle_aus_df(
+            pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
+                         columns=['Text', 'Sentiment']))
 
-
-
-        return render_template("textanalyse.html", titel=titel)
+        return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
 
