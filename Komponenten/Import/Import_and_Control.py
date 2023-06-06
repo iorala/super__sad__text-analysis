@@ -47,11 +47,12 @@ class DataImport:
         print("File Grösse:", self.file_size, "bytes")
 
     def get_rows(self):
-        with open(self.file_name, 'r', encoding='utf-8') as file:
+        with open(self.file_name, 'r', encoding='utf-8-sig') as file:
             reader = csv.reader(file)
             rows = []
             for row in reader:
-                rows.append(row)
+                if row:
+                    rows.append(row)
             return rows
 
     # Visitor Pattern für Erweiterungg der Importfunktionen
