@@ -6,9 +6,12 @@ from collections import Counter
 class SentimentAnalyse: # in SentimentAnalyse umbenennen
     def __init__(self):
         self.rows = None
+        self.sentiment_rows = None
+        self.sentiments = []
 
     def set_rows(self, rows):
-        self.rows = rows
+        # leere Zeilen entfernen, da Textblob sonst unter get_sentiments einen Fehler ausgibt ber row[0]
+        self.rows = [row for row in rows if row]
 
     def analyze_sentiment(self, text):
         # mit Hilfe der Bibliothek BlobDE (für Deutsche Texte) werden die einzelnen Texte klassifiziert dafür wird aus dem Text ein TextBlob Objekt generiert
@@ -26,17 +29,14 @@ class SentimentAnalyse: # in SentimentAnalyse umbenennen
     # Jeder Zeile wird eine Klassifikation mittels analyse_sentiment zugewiesen. Das Resultat wir in einer Liste gespeichert.
     def get_sentiments(self):
         # prüfen, ob self.rows wahr ist
-        sentiments = []
         for row in self.rows:
-            # Andreas: der Code stürzt sonst ab, wenn die Zeile leer ist
-            if row:
-                sentiment = self.analyze_sentiment(row[0])
-                print(sentiment)
-                sentiments.append(sentiment)
+            sentiment = self.analyze_sentiment(row[0])
+            print(sentiment)
+            self.sentiments.append(sentiment)
         sentiment_result = SentimentResult()
-        sentiment_result.positiv_count = sentiments.count('Positiv')
-        sentiment_result.negativ_count = sentiments.count('Negativ')
-        sentiment_result.neutral_count = sentiments.count('Neutral')
+        sentiment_result.positiv_count = self.sentiments.count('Positiv')
+        sentiment_result.negativ_count = self.sentiments.count('Negativ')
+        sentiment_result.neutral_count = self.sentiments.count('Neutral')
         return sentiment_result
 
 
