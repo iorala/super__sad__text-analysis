@@ -30,7 +30,7 @@ def main(datei):
         print(f"{sentiment}: {count}")
 
     # Visualisiere das Ergebnis
-    result_df = pd.DataFrame.from_dict(result_dict, orient='index', columns=['Count'])
+    result_df = result_dict
     visualisation_handler = VisualisationHandler(result_df)
     vis_result = visualisation_handler.handle_all()
 
