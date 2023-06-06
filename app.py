@@ -18,14 +18,13 @@ from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df, upload_verzeichnis_e
 # Fehlermeldungen laden
 from Messages import Messages
 
-
 # Datenimport
 from Komponenten.Import.Import_and_Control import DataImport, DataControl
 
 # Textanalyse
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
-#from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
+# from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
 # Export
 from Komponenten.Export.Export import Export
@@ -98,20 +97,22 @@ def import_anzeigen():
         # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
         if csv_datei.filename == '':
             fehlermeldung = "Bitte eine Datei auswählen"
-            return (fehlermeldung) # Hier muss noch eine Fehlerseite eingefügt werden
+            return (fehlermeldung)  # Hier muss noch eine Fehlerseite eingefügt werden
         # Datei speichern
+        # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)
         datei_id_csv = str(uuid.uuid4())
         session['dateiname_csv'] = datei_id_csv + "_" + secure_filename(csv_datei.filename)
         csv_datei.save(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         data_importer = DataImport()
         data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        if data_importer.status != 0:
+        if data_importer.status != data_importer.constants.SUCCESS:
             fehlermeldung = "Der import ist fehlgeschlagen. "
             fehlermeldung += meldungen.get_message(data_importer.status)
-            return (fehlermeldung) # Hier muss noch eine Fehlerseite eingefügt werden
-        csv_tabelle = bs_tabelle_aus_df(data_importer.get_dataframe().head())
+            return fehlermeldung  # Hier muss noch eine Fehlerseite eingefügt werden
+        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).dropna().head())
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
-    return (home()) # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
+    return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
+
 
 # - Sentiment Analysis
 #     - Führt die Sentiment analyse durch
@@ -119,29 +120,26 @@ def import_anzeigen():
 #     - → Button für Visualize
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
-    titel = "Texte analysieren"
+    titel = "Sentiment Analyse"
     if request.method == "POST":
-        # Korpus erstellen
-        corpus = Corpus(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        rows = corpus.read_csv_file()
+        # Importiere Daten
+        data_importer = DataImport()
+        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
+        rows = data_importer.get_rows()
 
-        # Sentimentanalyse durchführen
-        #analyzer = SentimentAnalyse(rows)
+        # Führe Sentiment-Analyse durch
+        sentiment_analyse = SentimentAnalyse()
+        sentiment_analyse.set_rows(rows)
+        sentiment_result = sentiment_analyse.get_sentiments()
 
-        #sentiments = analyzer.get_sentiments()
+        print(sentiment_analyse.rows)
+        print(sentiment_analyse.sentiments)
 
-        # DataFrame wird erstellt:
-        #sentiment_dataframe = SentimentDataFrame(rows)
-        #sentiment_dataframe.create_dataframe(sentiments)
-        #sentiments_df = sentiment_dataframe.get_dataframe()
-        #sentiment_tabelle = bs_tabelle_aus_df(sentiments_df.head())
 
-        # DataFrame wird gespeichert
-        #session['dateiname_sent'] = session['dateiname_csv'] + '_sent.pkl'
-        #joblib.dump(sentiments_df, os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
 
-        return render_template("textanalyse.html", sentiment_tabelle=sentiment_tabelle, titel=titel)
-    return (home())  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
+
+        return render_template("textanalyse.html", titel=titel)
+    return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
 
 # - Visualize

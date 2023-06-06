@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+
 def bs_tabelle_aus_df(df):
     # Erstellen der Bootstrap-Tabelle
     table_html = '<table class="table table-striped">\n'
@@ -27,12 +28,9 @@ def bs_tabelle_aus_df(df):
     return table_html
 
 
-
 def upload_verzeichnis_erstellen(pfad):
     if os.path.isfile(pfad):
         print(f'Fehler: Eine Datei mit dem Namen {pfad} existiert bereits.')
     elif not os.path.isdir(pfad):
         os.makedirs(pfad)
         print(f'Verzeichnis {pfad} wurde erstellt.')
-
-
