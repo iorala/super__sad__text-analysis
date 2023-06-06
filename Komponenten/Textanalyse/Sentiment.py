@@ -11,7 +11,7 @@ class SentimentAnalyse: # in SentimentAnalyse umbenennen
 
     def set_rows(self, rows):
         # leere Zeilen entfernen, da Textblob sonst unter get_sentiments einen Fehler ausgibt ber row[0]
-        self.rows = [row for row in rows if row]
+        self.rows = rows
 
     def analyze_sentiment(self, text):
         # mit Hilfe der Bibliothek BlobDE (für Deutsche Texte) werden die einzelnen Texte klassifiziert dafür wird aus dem Text ein TextBlob Objekt generiert
@@ -30,7 +30,7 @@ class SentimentAnalyse: # in SentimentAnalyse umbenennen
     def get_sentiments(self):
         # prüfen, ob self.rows wahr ist
         for row in self.rows:
-            sentiment = self.analyze_sentiment(row[0])
+            sentiment = self.analyze_sentiment(row)
             print(sentiment)
             self.sentiments.append(sentiment)
         sentiment_result = SentimentResult()

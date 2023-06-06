@@ -52,7 +52,7 @@ class DataImport:
             rows = []
             for row in reader:
                 if row:
-                    rows.append(row)
+                    rows.append(row[0])
             return rows
 
     # Visitor Pattern für Erweiterungg der Importfunktionen
