@@ -6,6 +6,8 @@ import joblib
 from collections import defaultdict
 import pandas as pd
 from werkzeug.utils import secure_filename
+import plotly.offline as plot
+import plotly.io as pio
 
 # Nachrichten laden
 from Messages import Messages
@@ -163,14 +165,29 @@ def visualisierung():
 
         # Visualisierung erstellen
         data_visualiser = DataVisualiser(sentiment_result)
+
         fig = data_visualiser.charts[chart_type]
-    return render_template("visualisierung.html", fig=fig)
+        # fig_html = plot(fig, output_type="div")
+        fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
+    return render_template("visualisierung.html", fig_html=fig_html)
+
 
 # Graph exportieren
 @app.route('/export', methods=["GET", "POST"])
 def export():
-    # Blah blah
+    if request.method == "POST":
+        # Daten laden
+        sentiment_result = session['sentiment_result_dict']
+        chart_type = request.form['chart_type']
+
+        # Visualisierung erstellen
+        data_visualiser = DataVisualiser(sentiment_result)
+
+        fig = data_visualiser.charts[chart_type]
+        # fig_html = plot(fig, output_type="div")
+        fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
     return render_template("name_seite.html")
+
 
 # Template
 @app.route('/name_seite', methods=["GET", "POST"])

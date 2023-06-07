@@ -55,7 +55,7 @@ class DataImport:
                     rows.append(row[0])
             return rows
 
-    # Visitor Pattern für Erweiterungg der Importfunktionen
+    # Visitor Pattern für Erweiterung der Importfunktionen
     def accept(self, visitor: Visitor):
         visitor.visit(self)
 
@@ -63,8 +63,9 @@ class DataImport:
 class DataControl:
     @staticmethod
     def check_column_count(file_name):
+        # with open(file_name, 'r', encoding='utf-8') as file: # Expliziter UTF-8 encoding entfernt wegen BOM
         with open(file_name, 'r') as file:
-        #with open(file_name, 'r', encoding='utf-8') as file:
+
             reader = csv.reader(file, delimiter=";")
             header = next(reader, None)
             if len(header) == 1:
