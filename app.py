@@ -24,7 +24,7 @@ from Komponenten.Import.Import_and_Control import DataImport, DataControl
 # Textanalyse
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
-# from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
+from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
 # Export
 from Komponenten.Export.Export import Export
@@ -139,7 +139,11 @@ def textanalyse():
             pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
                          columns=['Text', 'Sentiment']))
 
-        return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle)
+        # Minimales Objekt DataVisualiser erstellen um die möglichen Diagrammtypen zu erhalten
+        diagramm_typen = DataVisualiser({0: None}).charts.keys()
+
+        return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle,
+                               diagramm_typen=diagramm_typen)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
 

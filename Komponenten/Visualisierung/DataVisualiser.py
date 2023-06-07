@@ -1,15 +1,18 @@
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
-#from Sentiment import SentimentResult
+# from Sentiment import SentimentResult
 
 import pandas as pd
 import plotly.express as px
-#from Sentiment import SentimentResult
+
+
+# from Sentiment import SentimentResult
 
 class DataVisualiser:
     def __init__(self, data):
         self.data = data
+        self.charts = {"Kuchendiagramm": self.plot_pie_chart(), "Balkendiagramm": self.plot_bar_chart()}
 
     def plot_bar_chart(self):
         fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()))
@@ -30,7 +33,7 @@ class DataVisualiser:
     def display_table(self):
         table = pd.DataFrame(list(self.data.items()), columns=["Sentiment", "Count"])
         return table
-    
+
     def save_visualizations(self, file_prefix):
         bar_chart_file = file_prefix + "_bar_chart.png"
         pie_chart_file = file_prefix + "_pie_chart.png"
@@ -45,10 +48,15 @@ class DataVisualiser:
 
         return bar_chart_file, pie_chart_file
 
+    def dump(self) -> dict[str, int]:
+        return self.__dict__
+
+
 class VisResult:
     bar = None
     pie = None
     table = None
+
     def __init__(self):
         pass
 

@@ -1,3 +1,29 @@
 {% include "header.html" %}
 <!--Inhalt der Seite-->
+<div class="row">
+    <div class="col">
+        <form action="{{url_for('export')}}" method="post" enctype="multipart/form-data">
+            <h2>Visualisierung</h2>
+            <p>Erste zehn Zeilen der Sentimentanalyse</p>
+            <div class="container">
+                <div class="row">
+                    {{ sentiment_tabelle | safe}}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <label for="chart_type" class="input-group-text">Wählen Sie den Diagrammtyp:</label>
+                            <select class="form-control" name="chart_type" id="chart_type">
+                                {% for wert in diagramm_typen %}
+                                    <option value="{{ wert }}">{{ wert }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary">Sentiment visualisieren</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% include "footer.html" %}
