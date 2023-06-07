@@ -51,9 +51,6 @@ class DataVisualiser:
 
         return bar_chart_file, pie_chart_file
 
-    def dump(self) -> dict[str, int]:
-        return self.__dict__
-
 
 class VisResult:
     bar = None

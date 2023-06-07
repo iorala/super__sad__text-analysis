@@ -43,7 +43,7 @@ def main(datei):
     # Zeige die Tabelle an
     print("Tabellarische Darstellung:")
     print(vis_result.table)
-    
+
     # Speichere die Diagramme
     visualizer = DataVisualiser(result_dict)
     bar_chart_file, pie_chart_file = visualizer.save_visualizations("sentiment_analysis")

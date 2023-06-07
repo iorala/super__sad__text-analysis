@@ -5,6 +5,9 @@ test
 ## Ordner für uploads
 uploads/
 
+## PNG_Dateien
+static/sentiment_analysis_*_*.png
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

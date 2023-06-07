@@ -111,7 +111,7 @@ def import_anzeigen():
             fehlermeldung = "Der import ist fehlgeschlagen. "
             fehlermeldung += meldungen.get_message(data_importer.status)
             return fehlermeldung  # Hier muss noch eine Fehlerseite eingefügt werden
-        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).head())
+        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).head(n=10))
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
@@ -139,7 +139,7 @@ def textanalyse():
 
         sentiment_tabelle = bs_tabelle_aus_df(
             pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
-                         columns=['Text', 'Sentiment']))
+                         columns=['Text', 'Sentiment']).head(n=10))
 
         # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
         diagramm_typen = DataVisualiser({0: None}).charts.keys()
@@ -166,10 +166,15 @@ def visualisierung():
         # Visualisierung erstellen
         data_visualiser = DataVisualiser(sentiment_result)
 
+        # Download_Datei erstellen
+        bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("static/sentiment_analysis")
+        files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
+
+        png_datei = files[chart_type]
         fig = data_visualiser.charts[chart_type]
         # fig_html = plot(fig, output_type="div")
         fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
-    return render_template("visualisierung.html", fig_html=fig_html)
+    return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei)
 
 
 # Graph exportieren
@@ -182,6 +187,9 @@ def export():
 
         # Visualisierung erstellen
         data_visualiser = DataVisualiser(sentiment_result)
+
+        bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("sentiment_analysis")
+        files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
 
         fig = data_visualiser.charts[chart_type]
         # fig_html = plot(fig, output_type="div")
