@@ -132,14 +132,14 @@ def textanalyse():
         sentiment_analyse = SentimentAnalyse()
         sentiment_analyse.set_rows(rows)
         sentiment_result = sentiment_analyse.get_sentiments()
-
-        print(sentiment_analyse.sentiments)
+        result_dict = sentiment_result.get_result_as_dict()
+        session['sentiment_result_dict'] = result_dict
 
         sentiment_tabelle = bs_tabelle_aus_df(
             pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
                          columns=['Text', 'Sentiment']))
 
-        # Minimales Objekt DataVisualiser erstellen um die möglichen Diagrammtypen zu erhalten
+        # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
         diagramm_typen = DataVisualiser({0: None}).charts.keys()
 
         return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle,
@@ -158,10 +158,19 @@ def textanalyse():
 def visualisierung():
     if request.method == "POST":
         # Daten laden
-        sentiment_dataframe = joblib.load(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_sent']))
-        # if request.form['chart_type'] == 'bar':
-    return render_template("visualisierung.html")
+        sentiment_result = session['sentiment_result_dict']
+        chart_type = request.form['chart_type']
 
+        # Visualisierung erstellen
+        data_visualiser = DataVisualiser(sentiment_result)
+        fig = data_visualiser.charts[chart_type]
+    return render_template("visualisierung.html", fig=fig)
+
+# Graph exportieren
+@app.route('/export', methods=["GET", "POST"])
+def export():
+    # Blah blah
+    return render_template("name_seite.html")
 
 # Template
 @app.route('/name_seite', methods=["GET", "POST"])
