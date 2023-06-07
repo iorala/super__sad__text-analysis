@@ -14,3 +14,9 @@ table = visualizer.display_table()
 fig_1.show()
 fig.show()
 print(table)
+
+# Diagramme speichern
+bar_chart_file, pie_chart_file = visualizer.save_visualizations("sentiment_analysis")
+
+print("Bar Chart wurde gespeichert unter:", bar_chart_file)
+print("Pie Chart wurde gespeichert unter:", pie_chart_file)
