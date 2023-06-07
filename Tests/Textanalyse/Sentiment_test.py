@@ -1,17 +1,16 @@
 import unittest
-import pandas as pd
-from Komponenten.Textanalyse.Sentiment import SentimentResult
-from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
+from ...Komponenten.Textanalyse.Sentiment import SentimentResult
+from ...Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 
 class TestSentimentAnalyse(unittest.TestCase):
     def test_get_sentiments(self):
         # Test data
         rows = [
-            ['Es ist ein wunderschöner Tag.'],
-            ['Der Service ist nicht gut.'],
-            ['Es ist okay.'],
-            ['Das Buch ist schlecht.'],
-            ['Ich liebe es.']
+            'Es ist ein wunderschöner Tag.',
+            'Der Service ist nicht gut.',
+            'Es ist okay.',
+            'Das Buch ist schlecht.',
+            'Ich liebe es.'
         ]
         analyser = SentimentAnalyse()
         analyser.set_rows(rows)

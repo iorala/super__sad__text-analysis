@@ -1,7 +1,7 @@
 # Für Visualisierung Teil Test und Demo sind gleich, also in diesem File zusammengefasst
 import pandas as pd
-from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
-from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
+from ...Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
+from ...Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
 sentiments_dict = {'Positiv':2, 'Negativ':1, 'Neutral':3}
 

@@ -1,7 +1,4 @@
 from textblob_de import TextBlobDE
-import pandas as pd
-from collections import Counter
-
 
 class SentimentAnalyse: # in SentimentAnalyse umbenennen
     def __init__(self):
@@ -28,15 +25,17 @@ class SentimentAnalyse: # in SentimentAnalyse umbenennen
 
     # Jeder Zeile wird eine Klassifikation mittels analyse_sentiment zugewiesen. Das Resultat wir in einer Liste gespeichert.
     def get_sentiments(self):
-        # prüfen, ob self.rows wahr ist
+        # jeder Zeile wird ein Sentiment zugewiesen. Die Sentiments werden in einer Liste gespeichert
         for row in self.rows:
             sentiment = self.analyze_sentiment(row)
-            print(sentiment)
             self.sentiments.append(sentiment)
         sentiment_result = SentimentResult()
+
+        # die Klassifikationen werden summiert
         sentiment_result.positiv_count = self.sentiments.count('Positiv')
         sentiment_result.negativ_count = self.sentiments.count('Negativ')
         sentiment_result.neutral_count = self.sentiments.count('Neutral')
+
         return sentiment_result
 
 
@@ -48,7 +47,7 @@ class SentimentResult:
         self.negativ_count = -1
         self.neutral_count = -1
 
-    # Die importierten Daten werden mit den Klassifikationen aus der Sentiment-Analyse in ein DataFrame gespeichert
+    # das summierte Resultat der Sentiment-Analyse wird in ein Dictionary gespeichert
     def get_result_as_dict(self):
         sentiment_counts = {
             'Positiv': self.positiv_count,
@@ -56,7 +55,6 @@ class SentimentResult:
             'Neutral': self.neutral_count
         }
         return sentiment_counts
-
 
 
 

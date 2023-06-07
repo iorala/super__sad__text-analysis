@@ -15,16 +15,19 @@ class DataVisualiser:
         self.charts = {"Kuchendiagramm": self.plot_pie_chart(), "Balkendiagramm": self.plot_bar_chart()}
 
     def plot_bar_chart(self):
-        fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()))
+        fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()), color = self.data.keys(), color_discrete_map = {'Neutral': 'lightgrey','Negativ': 'indianred', 'Positiv':'forestgreen'})
         fig_1.update_layout(
             xaxis_title="Kategorien",
             yaxis_title="Werte",
-            title="Sentimentanalyse Ergebnis"
+            title="Sentimentanalyse Ergebnis",
+            plot_bgcolor='white',
+            paper_bgcolor='white',
         )
+        fig_1.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='#878787')
         return fig_1
 
     def plot_pie_chart(self):
-        fig = px.pie(values=list(self.data.values()), names=list(self.data.keys()))
+        fig = px.pie(values=list(self.data.values()), names=list(self.data.keys()), color = self.data.keys() ,color_discrete_map = {'Neutral': 'lightgrey','Negativ': 'indianred', 'Positiv':'forestgreen'})
         fig.update_layout(
             title="Sentimentanalyse Ergebnis"
         )
