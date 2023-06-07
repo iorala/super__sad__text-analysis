@@ -30,6 +30,20 @@ class DataVisualiser:
     def display_table(self):
         table = pd.DataFrame(list(self.data.items()), columns=["Sentiment", "Count"])
         return table
+    
+    def save_visualizations(self, file_prefix):
+        bar_chart_file = file_prefix + "_bar_chart.png"
+        pie_chart_file = file_prefix + "_pie_chart.png"
+
+        # Bar Chart speichern
+        bar_chart = self.plot_bar_chart()
+        bar_chart.write_image(bar_chart_file)
+
+        # Pie Chart speichern
+        pie_chart = self.plot_pie_chart()
+        pie_chart.write_image(pie_chart_file)
+
+        return bar_chart_file, pie_chart_file
 
 class VisResult:
     bar = None
