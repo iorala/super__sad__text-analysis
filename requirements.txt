@@ -8,4 +8,4 @@ gunicorn~=20.1.0
 textblob_de~=0.4.3
 nltk~=3.8.1
 plotly~=5.3.1
-```
+kaleido~=0.2.1
