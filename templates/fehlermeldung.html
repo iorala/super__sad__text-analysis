@@ -2,15 +2,17 @@
 <!--Inhalt der Seite-->
 <div class="row">
     <div class="col">
-            <h2>Visualisierung</h2>
             <div class="container">
+                <h2>Fehler!</h2>
                 <div class="row">
-                    {{ fig_html | safe}}
+                    <div class="col">
+                            <h3>{{ fehlermeldung }}</h3>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="input-group mb-3">
-                            <a href="{{ png_datei }}" class="btn btn-primary" download> Grafik als PNG speichern</a>
+                            <a href="{{url_for('home')}}" class="btn btn-primary"> Zurück zum Upload </a>
                         </div>
                     </div>
                 </div>

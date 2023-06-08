@@ -18,6 +18,9 @@ class DataImport:
             self.file_format = self.get_file_format(file_name)
             self.file_size = self.get_file_size(file_name)
             self.display_file_info()
+            if self.file_format != "csv":
+                self.status = self.constants.FILE_FORMAT_ERROR
+                return
             if DataControl.check_column_count(file_name):
                 self.status = self.constants.SUCCESS
                 # self.get_rows()

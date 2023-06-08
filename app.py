@@ -32,7 +32,7 @@ from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 # wird auf heroku von textblob_de nicht installiert
 # https://devcenter.heroku.com/articles/python-nltk
 # import nltk
-# nltk.download('punkt')
+# nltk.download('punkt')ﬁ
 
 
 # Globale Variablen und Funktionen
@@ -103,9 +103,9 @@ def import_anzeigen():
         data_importer = DataImport()
         data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         if data_importer.status != data_importer.constants.SUCCESS:
-            fehlermeldung = "Der import ist fehlgeschlagen. "
+            fehlermeldung = "Der Import ist fehlgeschlagen: "
             fehlermeldung += meldungen.get_message(data_importer.status)
-            return fehlermeldung  # Hier muss noch eine Fehlerseite eingefügt werden
+            return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
         csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).head(n=10))
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
