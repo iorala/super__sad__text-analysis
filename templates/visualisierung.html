@@ -2,6 +2,7 @@
 <!--Inhalt der Seite-->
 <div class="row">
     <div class="col">
+        <form action="{{url_for('textanalyse')}}" method="post" enctype="multipart/form-data">
             <h2>Visualisierung</h2>
             <div class="container">
                 <div class="row">
@@ -9,13 +10,13 @@
                 </div>
                 <div class="row">
                     <div class="col">
-
-                            <a href="{{ png_datei }}" class="btn btn-primary" download> Grafik als PNG speichern</a>
-                            <a href="{{url_for('home')}}" class="btn btn-primary" > Zurück zum Upload</a>
-
+                            <button type="submit" class="btn btn-primary">Zurück zur Textanalyse</button>
+                            <a href="{{ png_datei }}" class="btn btn-primary" download>Grafik als PNG speichern</a>
+                            <a href="{{url_for('home')}}" class="btn btn-primary" >Neuer Text analysieren</a>
                     </div>
                 </div>
             </div>
+            </form>
     </div>
 </div>
 {% include "footer.html" %}
