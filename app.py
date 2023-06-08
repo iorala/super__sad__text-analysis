@@ -6,11 +6,7 @@ import joblib
 from collections import defaultdict
 import pandas as pd
 from werkzeug.utils import secure_filename
-import plotly.offline as plot
 import plotly.io as pio
-
-# Nachrichten laden
-from Messages import Messages
 
 # Komponenten laden
 
@@ -32,7 +28,7 @@ from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 # wird auf heroku von textblob_de nicht installiert
 # https://devcenter.heroku.com/articles/python-nltk
 # import nltk
-# nltk.download('punkt')ﬁ
+# nltk.download('punkt')
 
 
 # Globale Variablen und Funktionen
@@ -89,7 +85,6 @@ def home():
 def import_anzeigen():
     titel = "Importierte Texte"
     if request.method == "POST":
-        print("request.files:", request.files['csv_datei'])
         csv_datei = request.files['csv_datei']
         # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
         if csv_datei.filename == '':
@@ -123,7 +118,6 @@ def textanalyse():
         data_importer = DataImport()
         data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         rows = data_importer.get_rows()
-        print(rows)
 
         # Führe Sentiment-Analyse durch
         sentiment_analyse = SentimentAnalyse()
