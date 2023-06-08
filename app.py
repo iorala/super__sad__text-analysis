@@ -89,7 +89,7 @@ def import_anzeigen():
         # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
         if csv_datei.filename == '':
             fehlermeldung = "Bitte eine Datei auswählen"
-            return (fehlermeldung)  # Hier muss noch eine Fehlerseite eingefügt werden
+            return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
         # Datei speichern
         # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)
         datei_id_csv = str(uuid.uuid4())
