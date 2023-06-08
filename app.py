@@ -28,11 +28,6 @@ from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
-# Export
-from Komponenten.Export.Export import Export
-from Komponenten.Export.Image_data import ImageData
-from Komponenten.Export.PNG_Exporter import PNGExporter
-
 # Punkt-Tokenizer aus dem nltk-Modul importieren, da dieser für die Textanalyse benötigt wird
 # wird auf heroku von textblob_de nicht installiert
 # https://devcenter.heroku.com/articles/python-nltk
@@ -117,7 +112,7 @@ def import_anzeigen():
 
 
 # - Sentiment Analysis
-#     - Führt die Sentiment analyse durch
+#     - Führt die Sentiment analsadyse durch
 #     - Zeigt Daten HEAD (gleiche Zeilen) mit dem Sentiment wert
 #     - → Button für Visualize
 @app.route('/textanalyse', methods=["GET", "POST"])
