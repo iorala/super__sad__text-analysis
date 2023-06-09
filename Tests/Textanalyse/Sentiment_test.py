@@ -1,6 +1,6 @@
 import unittest
-from ...Komponenten.Textanalyse.Sentiment import SentimentResult
-from ...Komponenten.Textanalyse.Sentiment import SentimentAnalyse
+from Komponenten.Textanalyse.Sentiment import SentimentResult
+from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 
 
 class TestSentimentAnalyse(unittest.TestCase):

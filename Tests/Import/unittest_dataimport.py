@@ -22,6 +22,7 @@ class TestDataImport(unittest.TestCase):
 
     def test_get_file_size(self):
         file_name = "importSAD.csv"
+        # Möglicherweise ist die Dateigrösse auf unterschiedlichen Betriebssystemen nicht immer gleich
         self.assertEqual(self.data_import.get_file_size(file_name), 319)
 
     def test_check_column_count(self):
