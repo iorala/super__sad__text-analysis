@@ -1,6 +1,6 @@
 # Visitor Patter
 # Mit Import ausprobieren
-from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df
+from Komponenten.UI.UI import bs_tabelle_aus_df
 from Komponenten.Visitor import Visitor
 from Komponenten.Import.Import_and_Control import DataImport
 

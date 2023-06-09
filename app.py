@@ -11,7 +11,7 @@ import plotly.io as pio
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
-from Komponenten.UI.ui_funktionen import bs_tabelle_aus_df, upload_verzeichnis_erstellen
+from Komponenten.UI.UI import upload_verzeichnis_erstellen, UISentimentPipeline, TabelleAusDataframe
 
 # Fehlermeldungen laden
 from Messages import Messages
@@ -45,14 +45,6 @@ app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45
 # Verzeichnis zum Speichern der Nutzerdaten
 upload_verzeichnis_erstellen(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-# GUI entwickeln:
-#
-# - Mit Sessions arbeiten (nicht-Permanent)
-# - Testen, ob mit Sessions Objekte von einer App-Route an eine andere Weitergegeben werden können
-# - Keine Unittests
-# - Bootstrap
 
 
 #
@@ -99,7 +91,7 @@ def import_anzeigen():
             fehlermeldung = "Der Import ist fehlgeschlagen: "
             fehlermeldung += meldungen.get_message(data_importer.status)
             return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
-        csv_tabelle = bs_tabelle_aus_df(pd.DataFrame(data_importer.get_rows()).head(n=10))
+        csv_tabelle = TabelleAusDataframe.html(pd.DataFrame(data_importer.get_rows()).head(n=10))
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
@@ -108,31 +100,21 @@ def import_anzeigen():
 #     - Führt die Sentiment analsadyse durch
 #     - Zeigt Daten HEAD (gleiche Zeilen) mit dem Sentiment wert
 #     - → Button für Visualize
+# - ToDo: UI Code Reduzieren: CSV-Speichern als Klasse!
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
     titel = "Sentiment Analyse"
     if request.method == "POST":
-        # Importiere Daten
-        data_importer = DataImport()
-        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        rows = data_importer.get_rows()
+        pfad_datei = (os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
+        # Analyse in der ui_pipeline durchführen
+        ui_pipeline = UISentimentPipeline(app.config['UPLOAD_FOLDER'], session['dateiname_csv'])
 
-        # Führe Sentiment-Analyse durch
-        sentiment_analyse = SentimentAnalyse()
-        sentiment_analyse.set_rows(rows)
-        sentiment_result = sentiment_analyse.get_sentiments()
-        result_dict = sentiment_result.get_result_as_dict()
-        session['sentiment_result_dict'] = result_dict
-
-        sentiment_tabelle = bs_tabelle_aus_df(
-            pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
-                         columns=['Text', 'Sentiment']).head(n=10))
+        session['sentiment_result_dict'] = ui_pipeline.result_dict
 
         # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
-        # diagramm_typen = DataVisualiser({0: None}).charts.keys()
         diagramm_typen = ["Kuchendiagramm", "Balkendiagramm"]
 
-        return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle,
+        return render_template("textanalyse.html", titel=titel, sentiment_tabelle=ui_pipeline.sentiment_tabelle,
                                diagramm_typen=diagramm_typen)
     return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
 
