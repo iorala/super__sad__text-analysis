@@ -107,11 +107,11 @@ def visualisierung():
         # data_visualiser = DataVisualiser(sentiment_result)
         data_visualisation_handler = VisualisationHandler(sentiment_result)
 
-        if chart_type is "Kuchendiagramm":
+        if chart_type == "Kuchendiagramm":
             data_visualisation_handler.handle_pie()
             fig_html = pio.to_html(data_visualisation_handler.result.pie, full_html=False, include_plotlyjs='cdn')
             png_datei = data_visualisation_handler.save_pie("static/sentiment_analysis")
-        elif chart_type is "Balkendiagramm":
+        elif chart_type == "Balkendiagramm":
             data_visualisation_handler.handle_bar()
             fig_html = pio.to_html(data_visualisation_handler.result.bar, full_html=False, include_plotlyjs='cdn')
             png_datei = data_visualisation_handler.save_bar("static/sentiment_analysis")
