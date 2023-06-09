@@ -12,11 +12,11 @@ class SentimentAnalyse:  # in SentimentAnalyse umbenennen
         self.rows = rows
 
     def analyze_sentiment(self, text):
-        # mit Hilfe der Bibliothek BlobDE (für Deutsche Texte) werden die einzelnen Texte klassifiziert dafür wird aus dem Text ein TextBlob Objekt generiert
+        # mithilfe der Bibliothek BlobDE (für Deutsche Texte) werden die einzelnen Texte klassifiziert dafür wird aus dem Text ein TextBlob Objekt generiert
         text_blob = TextBlobDE(text)
         # mit Polarity wird ein Float zwischen -1 und 1 zurückgeben, wobei -1 negativ, 1 positiv und 0 neutral ist
         polarity = text_blob.sentiment.polarity
-        # Die Float Werte sollen direkt in den drei Klassen Positiv, Negativ und Neutral ausgeben werden
+        # Die Float-Werte sollen direkt in den drei Klassen Positiv, Negativ und Neutral ausgeben werden
         if polarity > 0:
             return 'Positiv'
         elif polarity < 0:

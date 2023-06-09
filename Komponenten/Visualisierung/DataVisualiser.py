@@ -1,13 +1,6 @@
 import pandas as pd
 import plotly.express as px
-import plotly.io as pio
-# from Sentiment import SentimentResult
 
-import pandas as pd
-import plotly.express as px
-
-
-# from Sentiment import SentimentResult
 
 class DataVisualiser:
     def __init__(self, data):
@@ -91,6 +84,3 @@ class VisualisationHandler:
         # Pie Chart speichern
         self.result.bar.write_image(bar_chart_file)
         return bar_chart_file
-
-
-

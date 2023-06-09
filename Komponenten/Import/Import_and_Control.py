@@ -57,6 +57,7 @@ class DataImport:
                     rows.append(row[0])
             return rows
 
+
 class DataControl:
     @staticmethod
     def check_column_count(file_name):

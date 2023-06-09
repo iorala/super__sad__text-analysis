@@ -1,22 +1,14 @@
 # benötigte Module importieren
 from flask import Flask, render_template, request, session
-import os
-import uuid
-import pandas as pd
-from werkzeug.utils import secure_filename
 import plotly.io as pio
 
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
-from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, TabelleAusDataframe, UIImportHandler
+from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, UIImportHandler
 
 # Fehlermeldungen laden
-from Komponenten.Constants import Constants
 from Komponenten.Messages import Messages
-
-# Datenimport
-from Komponenten.Import.Import_and_Control import DataImport
 
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
@@ -42,6 +34,7 @@ app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45
 # Verzeichnis zum Speichern der Nutzerdaten
 VerzeichnisErstellen.erstellen(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 #
 # Webseiten
@@ -114,18 +107,17 @@ def visualisierung():
         # data_visualiser = DataVisualiser(sentiment_result)
         data_visualisation_handler = VisualisationHandler(sentiment_result)
 
-        fig = None
-
-        if chart_type == "Kuchendiagramm":
+        if chart_type is "Kuchendiagramm":
             data_visualisation_handler.handle_pie()
-            fig = data_visualisation_handler.result.pie
+            fig_html = pio.to_html(data_visualisation_handler.result.pie, full_html=False, include_plotlyjs='cdn')
             png_datei = data_visualisation_handler.save_pie("static/sentiment_analysis")
-        if chart_type == "Balkendiagramm":
+        elif chart_type is "Balkendiagramm":
             data_visualisation_handler.handle_bar()
-            fig = data_visualisation_handler.result.bar
+            fig_html = pio.to_html(data_visualisation_handler.result.bar, full_html=False, include_plotlyjs='cdn')
             png_datei = data_visualisation_handler.save_bar("static/sentiment_analysis")
-
-        fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
+        else:
+            fehlermeldung = "Fehler: Diagrammtyp nicht gefunden!"
+            return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
     return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei)
 
 
