@@ -1,7 +1,6 @@
 import os
 import csv
 from Komponenten.Import.ImportConstants import ImportConstants
-from Komponenten.Visitor import Visitor
 
 
 class DataImport:
@@ -57,11 +56,6 @@ class DataImport:
                 if row:
                     rows.append(row[0])
             return rows
-
-    # Visitor Pattern für Erweiterung der Importfunktionen
-    def accept(self, visitor: Visitor):
-        visitor.visit(self)
-
 
 class DataControl:
     @staticmethod
