@@ -1,6 +1,7 @@
 from textblob_de import TextBlobDE
 
-class SentimentAnalyse: # in SentimentAnalyse umbenennen
+
+class SentimentAnalyse:  # in SentimentAnalyse umbenennen
     def __init__(self):
         self.rows = None
         self.sentiment_rows = None
@@ -55,6 +56,3 @@ class SentimentResult:
             'Neutral': self.neutral_count
         }
         return sentiment_counts
-
-
-

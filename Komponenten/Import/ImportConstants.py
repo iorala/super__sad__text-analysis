@@ -1,4 +1,4 @@
-class Import_Constants:
+class ImportConstants:
     SUCCESS = 0
     NOT_STARTED = 1
     FILE_NOT_FOUND = 2

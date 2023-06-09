@@ -3,7 +3,7 @@ import pandas as pd
 from ...Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 from ...Komponenten.Visualisierung.DataVisualiser import DataVisualiser
 
-sentiments_dict = {'Positiv':2, 'Negativ':1, 'Neutral':3}
+sentiments_dict = {'Positiv': 2, 'Negativ': 1, 'Neutral': 3}
 
 visualizer = DataVisualiser(sentiments_dict)
 

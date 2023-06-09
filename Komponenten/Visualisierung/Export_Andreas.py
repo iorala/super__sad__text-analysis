@@ -1,11 +1,13 @@
 import pandas as pd
 import plotly.express as px
 import plotly.io as pio
-#from Sentiment import SentimentResult
+# from Sentiment import SentimentResult
 
 import pandas as pd
 import plotly.express as px
-#from Sentiment import SentimentResult
+
+
+# from Sentiment import SentimentResult
 
 class DataVisualiser:
     def __init__(self, data):
@@ -45,10 +47,12 @@ class DataVisualiser:
 
         return bar_chart_file, pie_chart_file
 
+
 class VisResult:
     bar = None
     pie = None
     table = None
+
     def __init__(self):
         pass
 
@@ -65,7 +69,8 @@ class VisualisationHandler:
         result.table = visualizer.display_table()
         return result
 
-#Teil für test
+
+# Teil für test
 sentiments_dict = {"Positiv": 2, "Negativ": 1, "Neutral": 3}
 visualizer = DataVisualiser(sentiments_dict)
 

@@ -2,6 +2,7 @@ import unittest
 from ...Komponenten.Textanalyse.Sentiment import SentimentResult
 from ...Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 
+
 class TestSentimentAnalyse(unittest.TestCase):
     def test_get_sentiments(self):
         # Test data
@@ -16,13 +17,15 @@ class TestSentimentAnalyse(unittest.TestCase):
         analyser.set_rows(rows)
         result = analyser.get_sentiments()
 
-        #Resultat überprüfen
+        # Resultat überprüfen
         self.assertEqual(result.positiv_count, 2)
         self.assertEqual(result.negativ_count, 2)
         self.assertEqual(result.neutral_count, 1)
 
+
 if __name__ == '__main__':
     unittest.main()
+
 
 class TestSentimentResult(unittest.TestCase):
     def test_get_result_as_dict(self):
@@ -43,6 +46,6 @@ class TestSentimentResult(unittest.TestCase):
         }
         self.assertEqual(sentiment_counts, expected_counts)
 
+
 if __name__ == '__main__':
     unittest.main()
-

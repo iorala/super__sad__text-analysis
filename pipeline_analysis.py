@@ -1,6 +1,6 @@
 import nltk
 import pandas as pd
-from Komponenten.Import.Import_and_Control import DataImport, Import_Constants
+from Komponenten.Import.Import_and_Control import DataImport, ImportConstants
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler, DataVisualiser
 

@@ -15,15 +15,13 @@ from Komponenten.UI.UI import upload_verzeichnis_erstellen, UISentimentPipeline,
 from Messages import Messages
 
 # Datenimport
-from Komponenten.Import.Import_and_Control import DataImport, DataControl
+from Komponenten.Import.Import_and_Control import DataImport
 
-# Textanalyse
-from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 
 # Punkt-Tokenizer aus dem nltk-Modul importieren, da dieser für die Textanalyse benötigt wird
-# wird auf heroku von textblob_de nicht installiert
+#  auf heroku von textblob_de nicht installiert
 # https://devcenter.heroku.com/articles/python-nltk
 # import nltk
 # nltk.download('punkt')
@@ -33,7 +31,7 @@ from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 app_titel = "super().__sad__(text_analysis)"
 variable = "Inhalt"
 UPLOAD_FOLDER = 'uploads/'
-## Objekt für die Fehlermeldungen erstellen
+# Objekt für die Fehlermeldungen erstellen
 meldungen = Messages()
 
 # Applikation initialisieren
@@ -98,7 +96,6 @@ def import_anzeigen():
 def textanalyse():
     titel = "Sentiment Analyse"
     if request.method == "POST":
-        pfad_datei = (os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
         # Analyse in der ui_pipeline durchführen
         ui_pipeline = UISentimentPipeline(app.config['UPLOAD_FOLDER'], session['dateiname_csv'])
 
@@ -128,6 +125,8 @@ def visualisierung():
         # Visualisierung erstellen
         # data_visualiser = DataVisualiser(sentiment_result)
         data_visualisation_handler = VisualisationHandler(sentiment_result)
+
+        fig = None
 
         if chart_type == "Kuchendiagramm":
             data_visualisation_handler.handle_pie()

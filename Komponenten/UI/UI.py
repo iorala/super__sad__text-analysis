@@ -55,8 +55,6 @@ class UISentimentPipeline:
         # Erstelle Tabelle mit Sentiment-Ergebnissen
 
         sentiment_dataframe = pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
-                         columns=['Text', 'Sentiment']).head(n=10)
+                                           columns=['Text', 'Sentiment']).head(n=10)
 
         self.sentiment_tabelle = TabelleAusDataframe.html(sentiment_dataframe)
-
-

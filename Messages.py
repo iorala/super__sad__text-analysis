@@ -9,5 +9,5 @@ class Messages:
             5: "Falsches Dateiformat. Es sind nur CSV-Dateien erlaubt."
         }
 
-    def get_message(self,code):
+    def get_message(self, code):
         return self.messages[code]
