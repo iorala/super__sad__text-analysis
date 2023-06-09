@@ -13,14 +13,20 @@
     <!-- Eigenes CSS laden    -->
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+
 </head>
 <body>
 <div class="container">
         <!-- Inhalte für alle Seiten (z.b. Navigation) -->
-    <div class="container">
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{url_for('home')}}">🦆 super()._SAD_(text_analysis)</a>
-
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{url_for('home')}}">🦆 super()._SAD_(text_analysis)</a>
+        {% if titel != "Texte hochladen" and titel != "Fehler!" %}
+            <a class="btn btn-primary ml-auto" href="{{ url_for(backpage) }}">
+                <i class="fas fa-arrow-left"></i> Zurück
+            </a>
+        {% endif %}
+    </div>
+</nav>

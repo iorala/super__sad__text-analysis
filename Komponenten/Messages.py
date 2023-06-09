@@ -7,7 +7,9 @@ class Messages:
             3: "Mehrere Spalten in der Datei vorhanden. Es ist nur eine Spalte mit Inputs erlaubt.",
             4: "Nicht-Zeichenketten Werte in der CSV-Datei gefunden.",
             5: "Falsches Dateiformat. Es sind nur CSV-Dateien erlaubt.",
-            6: "Keine Datei hochgeladen: Bitte eine Datei auswählen"
+            6: "Keine Datei hochgeladen: Bitte eine Datei auswählen",
+            7: "Sentiment-Analyse fehlgeschlagen, bitte nochmals eine Datei hochladen.",
+            8: "Kein Diagramm ausgewählt. Bitte wählen Sie ein Diagramm aus."
         }
 
     def get_message(self, code):

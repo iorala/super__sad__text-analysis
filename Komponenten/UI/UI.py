@@ -80,8 +80,8 @@ class UIImportHandler:
         # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
         meldungen = Messages()
         if self.upload_datei.filename == '':
-            self.fehlermeldung = "Bitte eine Datei auswählen"
-            self.status = self.constants.NO_FILE_SELECTED
+            self.status = self.constants.NO_FILE_UPLOADED
+            self.fehlermeldung = meldungen.get_message(self.status)
         else:
             # Datei speichern und eindeutigen Dateinamen generieren
             # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)

@@ -9,6 +9,7 @@ from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, UIImpor
 
 # Fehlermeldungen laden
 from Komponenten.Messages import Messages
+from Komponenten.Constants import Constants
 
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
@@ -58,6 +59,13 @@ def home():
 @app.route('/import_anzeigen', methods=["GET", "POST"])
 def import_anzeigen():
     titel = "Importierte Texte"
+    if "upload_datei" not in request.files:
+        messages = Messages()
+        constants = Constants()
+        fehlermeldung = messages.get_message(constants.NO_FILE_UPLOADED)
+        return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung,
+                               titel="Fehler!")
+
     if request.method == "POST":
         upload_datei = request.files['upload_datei']
         import_handler = UIImportHandler(UPLOAD_FOLDER, upload_datei)
@@ -66,19 +74,24 @@ def import_anzeigen():
             return render_template("fehlermeldung.html", fehlermeldung=import_handler.fehlermeldung, titel="Fehler!")
         else:
             session['dateiname_csv'] = import_handler.dateiname_csv
-            return render_template("import_anzeigen.html", titel=titel, csv_tabelle=import_handler.csv_tabelle)
-    return home()  # Weiterleitung auf Hauptseite, wenn über Direktlink auf die Seite zugegriffen wird
+            return render_template("import_anzeigen.html", titel=titel, csv_tabelle=import_handler.csv_tabelle,
+                                   backpage="home")
 
 
 # - Sentiment Analysis
 #     - Führt die Sentiment-Analyse durch (in der ui_pipeline)
 #     - Zeigt Daten HEAD (gleiche Zeilen) mit dem Sentiment wert
 #     - Auswahl der gewünschten Visualisierung
-# - ToDo: UI Code Reduzieren: CSV-Speichern als Klasse!
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
     titel = "Sentiment Analyse"
-    if request.method == "POST":
+    # Prüfen, ob schon eine Datei hochgeladen wurde (z.b. bei zurück oder direkten Aufruf der Seite)
+    if 'dateiname_csv' not in session:
+        messages = Messages()
+        constants = Constants()
+        fehlermeldung = messages.get_message(constants.NO_FILE_UPLOADED)
+        return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
+    else:
         # Analyse in der ui_pipeline durchführen
         ui_pipeline = UISentimentPipeline(app.config['UPLOAD_FOLDER'], session['dateiname_csv'])
         session['sentiment_result_dict'] = ui_pipeline.result_dict
@@ -86,8 +99,7 @@ def textanalyse():
         diagramm_typen = ["Kuchendiagramm", "Balkendiagramm"]
 
         return render_template("textanalyse.html", titel=titel, sentiment_tabelle=ui_pipeline.sentiment_tabelle,
-                               diagramm_typen=diagramm_typen)
-    return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
+                               diagramm_typen=diagramm_typen, backpage="home")
 
 
 # - Visualize
@@ -98,13 +110,24 @@ def textanalyse():
 #
 @app.route('/visualisierung', methods=["GET", "POST"])
 def visualisierung():
-    if request.method == "POST":
+    if 'sentiment_result_dict' not in session:
+        messages = Messages()
+        constants = Constants()
+        fehlermeldung = messages.get_message(constants.SENTIMENT_ANALYSE_FAILED)
+        return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!",
+                               linkziel="import_anzeigen", linktext="Zurück und erneut versuchen")
+    # elif 'char_type' not in session:
+    #     messages = Messages()
+    #     constants = Constants()
+    #     fehlermeldung = messages.get_message(constants.NO_CHART_SELECTED)
+    #     return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!",
+    #                            linkziel="textanalyse", linktext="Zurück Diagrammtyp auswählen")
+    else:
         # Daten laden
         sentiment_result = session['sentiment_result_dict']
         chart_type = request.form['chart_type']
 
         # Visualisierung erstellen
-        # data_visualiser = DataVisualiser(sentiment_result)
         data_visualisation_handler = VisualisationHandler(sentiment_result)
 
         if chart_type == "Kuchendiagramm":
@@ -118,7 +141,7 @@ def visualisierung():
         else:
             fehlermeldung = "Fehler: Diagrammtyp nicht gefunden!"
             return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
-    return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei)
+    return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei, backpage="textanalyse")
 
 
 # App Ausführen
