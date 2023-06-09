@@ -1,6 +1,6 @@
 import os
 import csv
-from Komponenten.Import.ImportConstants import ImportConstants
+from Komponenten.Constants import Constants
 
 
 class DataImport:
@@ -8,7 +8,7 @@ class DataImport:
         self.file_name = ""
         self.file_format = ""
         self.file_size = 0
-        self.constants = ImportConstants()
+        self.constants = Constants()
         self.status = self.constants.NOT_STARTED
 
     def import_data(self, file_name):

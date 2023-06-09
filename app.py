@@ -69,7 +69,6 @@ def import_anzeigen():
         upload_datei = request.files['upload_datei']
         import_handler = UIImportHandler(UPLOAD_FOLDER, upload_datei)
         import_handler.import_datei()
-        print(import_handler.status)
         if import_handler.status != import_handler.constants.SUCCESS:
             return render_template("fehlermeldung.html", fehlermeldung=import_handler.fehlermeldung, titel="Fehler!")
         else:

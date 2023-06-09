@@ -4,7 +4,6 @@ from Komponenten.Import.Import_and_Control import DataImport
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 from werkzeug.utils import secure_filename
 from Komponenten.Messages import Messages
-from Komponenten.Import.ImportConstants import ImportConstants
 from Komponenten.Constants import Constants
 import uuid
 
