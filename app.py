@@ -10,23 +10,18 @@ from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, UIImpor
 # Fehlermeldungen laden
 from Komponenten.Messages import Messages
 from Komponenten.Constants import Constants
+# Objekt für die Fehlermeldungen erstellen
+messages = Messages()
+constants = Constants()
 
 # Visualisierung
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
-
-# Punkt-Tokenizer aus dem nltk-Modul importieren, da dieser für die Textanalyse benötigt wird
-#  auf heroku von textblob_de nicht installiert
-# https://devcenter.heroku.com/articles/python-nltk
-# import nltk
-# nltk.download('punkt')
-
 
 # Globale Variablen und Funktionen
 app_titel = "super().__sad__(text_analysis)"
 variable = "Inhalt"
 UPLOAD_FOLDER = 'uploads/'
-# Objekt für die Fehlermeldungen erstellen
-meldungen = Messages()
+
 
 # Applikation initialisieren
 app = Flask("super__sad__text_analysis")
@@ -54,14 +49,10 @@ def home():
 #     - Verarbeitet upload
 #     - Zeigt Tabelle mit dem HEAD der Daten
 #     - →Button für Versand an Sentiment Analysis
-# - ToDo: UI Code Reduzieren: CSV-Speichern als Klasse!
-# -
 @app.route('/import_anzeigen', methods=["GET", "POST"])
 def import_anzeigen():
     titel = "Importierte Texte"
     if "upload_datei" not in request.files:
-        messages = Messages()
-        constants = Constants()
         fehlermeldung = messages.get_message(constants.NO_FILE_UPLOADED)
         return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung,
                                titel="Fehler!")
@@ -87,8 +78,6 @@ def textanalyse():
     titel = "Sentiment Analyse"
     # Prüfen, ob schon eine Datei hochgeladen wurde (z.b. bei zurück oder direkten Aufruf der Seite)
     if 'dateiname_csv' not in session:
-        messages = Messages()
-        constants = Constants()
         fehlermeldung = messages.get_message(constants.NO_FILE_UPLOADED)
         return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
     else:
@@ -111,17 +100,9 @@ def textanalyse():
 @app.route('/visualisierung', methods=["GET", "POST"])
 def visualisierung():
     if 'sentiment_result_dict' not in session:
-        messages = Messages()
-        constants = Constants()
         fehlermeldung = messages.get_message(constants.SENTIMENT_ANALYSE_FAILED)
         return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!",
                                linkziel="import_anzeigen", linktext="Zurück und erneut versuchen")
-    # elif 'char_type' not in session:
-    #     messages = Messages()
-    #     constants = Constants()
-    #     fehlermeldung = messages.get_message(constants.NO_CHART_SELECTED)
-    #     return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!",
-    #                            linkziel="textanalyse", linktext="Zurück Diagrammtyp auswählen")
     else:
         # Daten laden
         sentiment_result = session['sentiment_result_dict']
