@@ -30,23 +30,23 @@ def main(datei):
         print(f"{sentiment}: {count}")
 
     # Visualisiere das Ergebnis
-    result_df = result_dict
-    visualisation_handler = VisualisationHandler(result_df)
-    vis_result = visualisation_handler.handle_all()
+    visualisation_handler = VisualisationHandler(result_dict)
+    visualisation_handler.handle_all()
 
     # Zeige das Bar Chart an
-    vis_result.bar.show()
+    visualisation_handler.result.bar.show()
 
     # Zeige das Pie Chart an
-    vis_result.pie.show()
+    visualisation_handler.result.pie.show()
 
     # Zeige die Tabelle an
     print("Tabellarische Darstellung:")
-    print(vis_result.table)
+    print(visualisation_handler.result.table)
 
     # Speichere die Diagramme
     visualizer = DataVisualiser(result_dict)
-    bar_chart_file, pie_chart_file = visualizer.save_visualizations("sentiment_analysis")
+    bar_chart_file = visualisation_handler.save_bar("sentiment_analysis")
+    pie_chart_file = visualisation_handler.save_pie("sentiment_analysis")
     print("Bar Chart wurde gespeichert unter:", bar_chart_file)
     print("Pie Chart wurde gespeichert unter:", pie_chart_file)
 
