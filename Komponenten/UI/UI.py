@@ -91,9 +91,9 @@ class UIImportHandler:
             data_importer = DataImport()
             data_importer.import_data(os.path.join(self.ordner, dateiname_csv))
             if data_importer.status != data_importer.constants.SUCCESS:
-                fehlermeldung = "Der Import ist fehlgeschlagen: "
-                fehlermeldung += meldungen.get_message(data_importer.status)
-                self.status = self.constants.IMPORT_FAILED
+                self.fehlermeldung = "Der Import ist fehlgeschlagen: "
+                self.fehlermeldung += meldungen.get_message(data_importer.status)
+                self.status = data_importer.status
             else:
                 self.status = self.constants.SUCCESS
                 self.dateiname_csv = dateiname_csv
