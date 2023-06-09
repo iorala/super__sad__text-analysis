@@ -1,9 +1,7 @@
 # benötigte Module importieren
-from flask import Flask, redirect, render_template, request, flash, session
+from flask import Flask, render_template, request, session
 import os
 import uuid
-import joblib
-from collections import defaultdict
 import pandas as pd
 from werkzeug.utils import secure_filename
 import plotly.io as pio
@@ -51,14 +49,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Webseiten
 #
 
-@app.route('/test/<eingabe>')
-# For testing
-def hello_world(eingabe):
-    return eingabe
-
-
-# Main: Upload Page:
-# FORM → Request and view upload
+# Home: Text hochladen  :
+# - Formular für Upload
+# - Erklärt Format
 @app.route('/')
 def home():
     titel = "Texte hochladen"
@@ -93,13 +86,13 @@ def import_anzeigen():
             return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
         csv_tabelle = TabelleAusDataframe.html(pd.DataFrame(data_importer.get_rows()).head(n=10))
         return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
-    return home()  # Weiterleitung auf hauptseite, wenn über direktlink auf die Seite zugegriffen wird
+    return home()  # Weiterleitung auf Hauptseite, wenn über Direktlink auf die Seite zugegriffen wird
 
 
 # - Sentiment Analysis
-#     - Führt die Sentiment analsadyse durch
+#     - Führt die Sentiment-Analyse durch (in der ui_pipeline)
 #     - Zeigt Daten HEAD (gleiche Zeilen) mit dem Sentiment wert
-#     - → Button für Visualize
+#     - Auswahl der gewünschten Visualisierung
 # - ToDo: UI Code Reduzieren: CSV-Speichern als Klasse!
 @app.route('/textanalyse', methods=["GET", "POST"])
 def textanalyse():
@@ -122,9 +115,8 @@ def textanalyse():
 # - Visualize
 #     - Führt die Visualisierung durch
 #     - Zeigt die Visualisierung an
-#     - → Button für Save
+#     - Visualisierung kann gespeichert werden
 #     - Speichert Visualisierung als PNG
-#     - Eventuell hat Korpus eine Funktion speichern als CSV (?)
 #
 @app.route('/visualisierung', methods=["GET", "POST"])
 def visualisierung():
@@ -146,21 +138,10 @@ def visualisierung():
             fig = data_visualisation_handler.result.bar
             png_datei = data_visualisation_handler.save_bar("static/sentiment_analysis")
 
-
-        # Download_Datei erstellen
-        #bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("static/sentiment_analysis")
-        #files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
-
-        #png_datei = files[chart_type]
-
-
-        # fig_html = plot(fig, output_type="div")
         fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
     return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei)
 
 
-# Graph exportieren
-#
 # App Ausführen
 #
 if __name__ == "__main__":
