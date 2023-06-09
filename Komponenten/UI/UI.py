@@ -2,6 +2,11 @@ import pandas as pd
 import os
 from Komponenten.Import.Import_and_Control import DataImport
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
+from werkzeug.utils import secure_filename
+from Komponenten.Messages import Messages
+from Komponenten.Import.ImportConstants import ImportConstants
+from Komponenten.Constants import Constants
+import uuid
 
 
 class TabelleAusDataframe:
@@ -59,3 +64,38 @@ class UISentimentPipeline:
                                            columns=['Text', 'Sentiment']).head(n=10)
 
         self.sentiment_tabelle = TabelleAusDataframe.html(sentiment_dataframe)
+
+
+class UIImportHandler:
+    def __init__(self, ordner, upload_datei):
+        self.status = 1
+        self.fehlermeldung = None
+        self.ordner = ordner
+        self.upload_datei = upload_datei
+        self.dateiname_csv = None
+        self.constants = Constants()
+        self.status = self.constants.NOT_STARTED
+        self.csv_tabelle = None
+
+    def import_datei(self):
+        # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
+        meldungen = Messages()
+        if self.upload_datei.filename == '':
+            self.fehlermeldung = "Bitte eine Datei auswählen"
+            self.status = self.constants.NO_FILE_SELECTED
+        else:
+            # Datei speichern und eindeutigen Dateinamen generieren
+            # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)
+            datei_id_csv = str(uuid.uuid4())
+            dateiname_csv = datei_id_csv + "_" + secure_filename(self.upload_datei.filename)
+            self.upload_datei.save(os.path.join(self.ordner, dateiname_csv))
+            data_importer = DataImport()
+            data_importer.import_data(os.path.join(self.ordner, dateiname_csv))
+            if data_importer.status != data_importer.constants.SUCCESS:
+                fehlermeldung = "Der Import ist fehlgeschlagen: "
+                fehlermeldung += meldungen.get_message(data_importer.status)
+                self.status = self.constants.IMPORT_FAILED
+            else:
+                self.status = self.constants.SUCCESS
+                self.dateiname_csv = dateiname_csv
+                self.csv_tabelle = TabelleAusDataframe.html(pd.DataFrame(data_importer.get_rows()).head(n=10))

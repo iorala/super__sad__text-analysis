@@ -9,10 +9,11 @@ import plotly.io as pio
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
-from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, TabelleAusDataframe
+from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, TabelleAusDataframe, UIImportHandler
 
 # Fehlermeldungen laden
-from Messages import Messages
+from Komponenten.Constants import Constants
+from Komponenten.Messages import Messages
 
 # Datenimport
 from Komponenten.Import.Import_and_Control import DataImport
@@ -42,7 +43,6 @@ app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45
 VerzeichnisErstellen.erstellen(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
 #
 # Webseiten
 #
@@ -66,24 +66,15 @@ def home():
 def import_anzeigen():
     titel = "Importierte Texte"
     if request.method == "POST":
-        csv_datei = request.files['csv_datei']
-        # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
-        if csv_datei.filename == '':
-            fehlermeldung = "Bitte eine Datei auswählen"
-            return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
-        # Datei speichern ->< Klasse
-        # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)
-        datei_id_csv = str(uuid.uuid4())
-        session['dateiname_csv'] = datei_id_csv + "_" + secure_filename(csv_datei.filename)
-        csv_datei.save(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        data_importer = DataImport()
-        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
-        if data_importer.status != data_importer.constants.SUCCESS:
-            fehlermeldung = "Der Import ist fehlgeschlagen: "
-            fehlermeldung += meldungen.get_message(data_importer.status)
-            return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
-        csv_tabelle = TabelleAusDataframe.html(pd.DataFrame(data_importer.get_rows()).head(n=10))
-        return render_template("import_anzeigen.html", titel=titel, csv_tabelle=csv_tabelle)
+        upload_datei = request.files['upload_datei']
+        import_handler = UIImportHandler(UPLOAD_FOLDER, upload_datei)
+        import_handler.import_datei()
+        print(import_handler.status)
+        if import_handler.status != import_handler.constants.SUCCESS:
+            return render_template("fehlermeldung.html", fehlermeldung=import_handler.fehlermeldung, titel="Fehler!")
+        else:
+            session['dateiname_csv'] = import_handler.dateiname_csv
+            return render_template("import_anzeigen.html", titel=titel, csv_tabelle=import_handler.csv_tabelle)
     return home()  # Weiterleitung auf Hauptseite, wenn über Direktlink auf die Seite zugegriffen wird
 
 
@@ -98,9 +89,7 @@ def textanalyse():
     if request.method == "POST":
         # Analyse in der ui_pipeline durchführen
         ui_pipeline = UISentimentPipeline(app.config['UPLOAD_FOLDER'], session['dateiname_csv'])
-
         session['sentiment_result_dict'] = ui_pipeline.result_dict
-
         # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
         diagramm_typen = ["Kuchendiagramm", "Balkendiagramm"]
 

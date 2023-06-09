@@ -6,7 +6,8 @@ class Messages:
             2: "Datei konnte nicht gefunden werden oder falscher Dateipfad.",
             3: "Mehrere Spalten in der Datei vorhanden. Es ist nur eine Spalte mit Inputs erlaubt.",
             4: "Nicht-Zeichenketten Werte in der CSV-Datei gefunden.",
-            5: "Falsches Dateiformat. Es sind nur CSV-Dateien erlaubt."
+            5: "Falsches Dateiformat. Es sind nur CSV-Dateien erlaubt.",
+            6: "Keine Datei hochgeladen: Bitte eine Datei auswählen"
         }
 
     def get_message(self, code):
