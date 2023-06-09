@@ -54,10 +54,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # - Keine Unittests
 # - Bootstrap
 
-# @app.name_der_Funktion()
-#
-# def funktion():
-#   return "x"
 
 #
 # Webseiten
@@ -167,32 +163,6 @@ def visualisierung():
 
 
 # Graph exportieren
-@app.route('/export', methods=["GET", "POST"])
-def export():
-    if request.method == "POST":
-        # Daten laden
-        sentiment_result = session['sentiment_result_dict']
-        chart_type = request.form['chart_type']
-
-        # Visualisierung erstellen
-        data_visualiser = DataVisualiser(sentiment_result)
-
-        bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("sentiment_analysis")
-        files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
-
-        fig = data_visualiser.charts[chart_type]
-        # fig_html = plot(fig, output_type="div")
-        fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
-    return render_template("name_seite.html")
-
-
-# Template
-@app.route('/name_seite', methods=["GET", "POST"])
-def name_seite():
-    # Blah blah
-    return render_template("name_seite.html")
-
-
 #
 # App Ausführen
 #
