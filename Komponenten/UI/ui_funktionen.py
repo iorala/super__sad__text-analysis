@@ -1,6 +1,28 @@
 import pandas as pd
 import os
 
+class UISentimentPipeline:
+    def __init__(self):
+        self.x = ""
+    def start(self):
+        # Importiere Daten
+        data_importer = DataImport()
+        data_importer.import_data(os.path.join(app.config['UPLOAD_FOLDER'], session['dateiname_csv']))
+        rows = data_importer.get_rows()
+
+        # Führe Sentiment-Analyse durch
+        sentiment_analyse = SentimentAnalyse()
+        sentiment_analyse.set_rows(rows)
+        sentiment_result = sentiment_analyse.get_sentiments()
+        result_dict = sentiment_result.get_result_as_dict()
+        session['sentiment_result_dict'] = result_dict
+
+        sentiment_tabelle = bs_tabelle_aus_df(
+            pd.DataFrame(list(zip(sentiment_analyse.rows, sentiment_analyse.sentiments)),
+                         columns=['Text', 'Sentiment']).head(n=10))
+
+        # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
+        diagramm_typen = DataVisualiser({0: None}).charts.keys()
 
 def bs_tabelle_aus_df(df):
     # Erstellen der Bootstrap-Tabelle

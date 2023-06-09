@@ -22,7 +22,7 @@ from Komponenten.Import.Import_and_Control import DataImport, DataControl
 # Textanalyse
 from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 # Visualisierung
-from Komponenten.Visualisierung.DataVisualiser import DataVisualiser
+from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler
 
 # Punkt-Tokenizer aus dem nltk-Modul importieren, da dieser für die Textanalyse benötigt wird
 # wird auf heroku von textblob_de nicht installiert
@@ -77,6 +77,8 @@ def home():
 #     - Verarbeitet upload
 #     - Zeigt Tabelle mit dem HEAD der Daten
 #     - →Button für Versand an Sentiment Analysis
+# - ToDo: UI Code Reduzieren: CSV-Speichern als Klasse!
+# -
 @app.route('/import_anzeigen', methods=["GET", "POST"])
 def import_anzeigen():
     titel = "Importierte Texte"
@@ -86,7 +88,7 @@ def import_anzeigen():
         if csv_datei.filename == '':
             fehlermeldung = "Bitte eine Datei auswählen"
             return render_template("fehlermeldung.html", fehlermeldung=fehlermeldung, titel="Fehler!")
-        # Datei speichern
+        # Datei speichern ->< Klasse
         # Dateiname besteht aus eindeutiger ID und dem sicheren Dateinamen (überprüft)
         datei_id_csv = str(uuid.uuid4())
         session['dateiname_csv'] = datei_id_csv + "_" + secure_filename(csv_datei.filename)
@@ -127,7 +129,8 @@ def textanalyse():
                          columns=['Text', 'Sentiment']).head(n=10))
 
         # Minimales Objekt DataVisualiser erstellen, um die möglichen Diagrammtypen zu erhalten
-        diagramm_typen = DataVisualiser({0: None}).charts.keys()
+        # diagramm_typen = DataVisualiser({0: None}).charts.keys()
+        diagramm_typen = ["Kuchendiagramm", "Balkendiagramm"]
 
         return render_template("textanalyse.html", titel=titel, sentiment_tabelle=sentiment_tabelle,
                                diagramm_typen=diagramm_typen)
@@ -149,14 +152,26 @@ def visualisierung():
         chart_type = request.form['chart_type']
 
         # Visualisierung erstellen
-        data_visualiser = DataVisualiser(sentiment_result)
+        # data_visualiser = DataVisualiser(sentiment_result)
+        data_visualisation_handler = VisualisationHandler(sentiment_result)
+
+        if chart_type == "Kuchendiagramm":
+            data_visualisation_handler.handle_pie()
+            fig = data_visualisation_handler.result.pie
+            png_datei = data_visualisation_handler.save_pie("static/sentiment_analysis")
+        if chart_type == "Balkendiagramm":
+            data_visualisation_handler.handle_bar()
+            fig = data_visualisation_handler.result.bar
+            png_datei = data_visualisation_handler.save_bar("static/sentiment_analysis")
+
 
         # Download_Datei erstellen
-        bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("static/sentiment_analysis")
-        files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
+        #bar_chart_file, pie_chart_file = data_visualiser.save_visualizations("static/sentiment_analysis")
+        #files = {"Balkendiagramm": bar_chart_file, "Kuchendiagramm": pie_chart_file}
 
-        png_datei = files[chart_type]
-        fig = data_visualiser.charts[chart_type]
+        #png_datei = files[chart_type]
+
+
         # fig_html = plot(fig, output_type="div")
         fig_html = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
     return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei)

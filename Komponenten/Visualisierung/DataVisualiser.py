@@ -12,10 +12,10 @@ import plotly.express as px
 class DataVisualiser:
     def __init__(self, data):
         self.data = data
-        self.charts = {"Kuchendiagramm": self.plot_pie_chart(), "Balkendiagramm": self.plot_bar_chart()}
 
     def plot_bar_chart(self):
-        fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()), color = self.data.keys(), color_discrete_map = {'Neutral': 'lightgrey','Negativ': 'indianred', 'Positiv':'forestgreen'})
+        fig_1 = px.bar(x=list(self.data.keys()), y=list(self.data.values()), color=self.data.keys(),
+                       color_discrete_map={'Neutral': 'lightgrey', 'Negativ': 'indianred', 'Positiv': 'forestgreen'})
         fig_1.update_layout(
             xaxis_title="Kategorien",
             yaxis_title="Werte",
@@ -27,7 +27,8 @@ class DataVisualiser:
         return fig_1
 
     def plot_pie_chart(self):
-        fig = px.pie(values=list(self.data.values()), names=list(self.data.keys()), color = self.data.keys() ,color_discrete_map = {'Neutral': 'lightgrey','Negativ': 'indianred', 'Positiv':'forestgreen'})
+        fig = px.pie(values=list(self.data.values()), names=list(self.data.keys()), color=self.data.keys(),
+                     color_discrete_map={'Neutral': 'lightgrey', 'Negativ': 'indianred', 'Positiv': 'forestgreen'})
         fig.update_layout(
             title="Sentimentanalyse Ergebnis"
         )
@@ -64,11 +65,32 @@ class VisResult:
 class VisualisationHandler:
     def __init__(self, data_dict):
         self.data_dict = data_dict
+        self.visualizer = DataVisualiser(self.data_dict)
+        self.result = VisResult()
 
     def handle_all(self):
-        visualizer = DataVisualiser(self.data_dict)
-        result = VisResult()
-        result.pie = visualizer.plot_pie_chart()
-        result.bar = visualizer.plot_bar_chart()
-        result.table = visualizer.display_table()
-        return result
+        self.handle_pie()
+        self.handle_bar()
+
+    def handle_pie(self):
+        if self.result.pie is None:
+            self.result.pie = self.visualizer.plot_pie_chart()
+
+    def handle_bar(self):
+        if self.result.bar is None:
+            self.result.bar = self.visualizer.plot_bar_chart()
+
+    def save_pie(self, file_prefix):
+        pie_chart_file = file_prefix + "_pie_chart.png"
+        # Pie Chart speichern
+        self.result.pie.write_image(pie_chart_file)
+        return pie_chart_file
+
+    def save_bar(self, file_prefix):
+        bar_chart_file = file_prefix + "_pie_chart.png"
+        # Pie Chart speichern
+        self.result.bar.write_image(bar_chart_file)
+        return bar_chart_file
+
+
+
