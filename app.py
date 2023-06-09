@@ -9,7 +9,7 @@ import plotly.io as pio
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
-from Komponenten.UI.UI import upload_verzeichnis_erstellen, UISentimentPipeline, TabelleAusDataframe
+from Komponenten.UI.UI import VerzeichnisErstellen, UISentimentPipeline, TabelleAusDataframe
 
 # Fehlermeldungen laden
 from Messages import Messages
@@ -39,7 +39,7 @@ app = Flask("super__sad__text_analysis")
 app.secret_key = b'03dbdf2044be76908d840d4fa4de082d111708ce8ba4d2794ee9be0f4af45622'
 
 # Verzeichnis zum Speichern der Nutzerdaten
-upload_verzeichnis_erstellen(UPLOAD_FOLDER)
+VerzeichnisErstellen.erstellen(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 

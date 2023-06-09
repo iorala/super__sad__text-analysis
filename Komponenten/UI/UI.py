@@ -32,12 +32,13 @@ class TabelleAusDataframe:
         return table_html
 
 
-def upload_verzeichnis_erstellen(pfad):
-    if os.path.isfile(pfad):
-        print(f'Fehler: Eine Datei mit dem Namen {pfad} existiert bereits.')
-    elif not os.path.isdir(pfad):
-        os.makedirs(pfad)
-        print(f'Verzeichnis {pfad} wurde erstellt.')
+class VerzeichnisErstellen:
+    @staticmethod
+    def erstellen(pfad):
+        if os.path.isfile(pfad):
+            raise FileExistsError(f'Fehler: Eine Datei mit dem Namen {pfad} existiert bereits.')
+        elif not os.path.isdir(pfad):
+            os.makedirs(pfad)
 
 
 class UISentimentPipeline:
