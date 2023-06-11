@@ -8,6 +8,7 @@ from Komponenten.Constants import Constants
 import uuid
 
 
+# Erstellt eine HTML-Tabelle aus einem gegebenen DataFrame.
 class TabelleAusDataframe:
     @staticmethod
     def html(df):
@@ -36,6 +37,7 @@ class TabelleAusDataframe:
         return table_html
 
 
+# Überprüft, ob ein Verzeichnis bereits existiert, und erstellt es gegebenenfalls.
 class VerzeichnisErstellen:
     @staticmethod
     def erstellen(pfad):
@@ -45,6 +47,8 @@ class VerzeichnisErstellen:
             os.makedirs(pfad)
 
 
+# Initialisiert eine Benutzerschnittstelle (UI) für die Sentiment-Pipeline. Importiert Daten,
+# führt Sentiment-Analyse durch und erstellt eine Tabelle mit den Ergebnissen.
 class UISentimentPipeline:
     def __init__(self, ordner, datei):
         data_importer = DataImport()
@@ -65,6 +69,8 @@ class UISentimentPipeline:
         self.sentiment_tabelle = TabelleAusDataframe.html(sentiment_dataframe)
 
 
+# Initialisiert einen Import-Handler für die Benutzerschnittstelle (UI).
+# Setzt verschiedene Attribute und den Status für den Importvorgang.
 class UIImportHandler:
     def __init__(self, ordner, upload_datei):
         self.status = 1
@@ -76,6 +82,8 @@ class UIImportHandler:
         self.status = self.constants.NOT_STARTED
         self.csv_tabelle = None
 
+    # Importiert eine hochgeladene Datei, speichert sie ab, führt einen Datenimport durch
+    # und überprüft den Importstatus. Erstellt auch eine HTML-Tabelle mit den importierten Daten.
     def import_datei(self):
         # wenn keine Datei ausgewählt wird, wir ein leerer string generiert
         meldungen = Messages()
