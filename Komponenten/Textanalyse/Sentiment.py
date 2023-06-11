@@ -7,10 +7,13 @@ class SentimentAnalyse:  # in SentimentAnalyse umbenennen
         self.sentiment_rows = None
         self.sentiments = []
 
+   # Setzt die Zeilen (Texte), die analysiert werden sollen.
     def set_rows(self, rows):
         # leere Zeilen entfernen, da Textblob sonst unter get_sentiments einen Fehler ausgibt ber row[0]
         self.rows = rows
 
+    # Analysiert das Sentiment eines gegebenen Texts mithilfe der TextBlobDE-Bibliothek
+    # und gibt die Klassifikation (Positiv, Negativ oder Neutral) zurück.
     def analyze_sentiment(self, text):
         # mithilfe der Bibliothek BlobDE (für Deutsche Texte) werden die einzelnen Texte klassifiziert dafür wird aus dem Text ein TextBlob Objekt generiert
         text_blob = TextBlobDE(text)
@@ -24,7 +27,9 @@ class SentimentAnalyse:  # in SentimentAnalyse umbenennen
         else:
             return 'Neutral'
 
-    # Jeder Zeile wird eine Klassifikation mittels analyse_sentiment zugewiesen. Das Resultat wir in einer Liste gespeichert.
+    # Weist jedem Text in den Zeilen eine Sentiment-Klassifikation zu und speichert die Ergebnisse in einer Liste.
+    # Gibt ein SentimentResult-Objekt zurück, das die Summen der Klassifikationen enthält
+
     def get_sentiments(self):
         # jeder Zeile wird ein Sentiment zugewiesen. Die Sentiments werden in einer Liste gespeichert
         for row in self.rows:
@@ -48,7 +53,8 @@ class SentimentResult:
         self.negativ_count = -1
         self.neutral_count = -1
 
-    # das summierte Resultat der Sentiment-Analyse wird in ein Dictionary gespeichert
+    # Gibt das summierte Ergebnis der Sentiment-Analyse als Wörterbuch (Dictionary) zurück,
+    # das die Anzahl der positiven, negativen und neutralen Klassifikationen enthält.
     def get_result_as_dict(self):
         sentiment_counts = {
             'Positiv': self.positiv_count,
