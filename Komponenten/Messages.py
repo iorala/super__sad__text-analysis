@@ -1,4 +1,5 @@
 class Messages:
+    # Initialisiert das messages-Dictionary mit den Meldungen für verschiedene Codes.
     def __init__(self):
         self.messages = {
             0: "Prozess erfolgreich abgeschlossen",
@@ -12,5 +13,6 @@ class Messages:
             8: "Kein Diagramm ausgewählt. Bitte wählen Sie ein Diagramm aus."
         }
 
+    # Gibt die Meldung für einen bestimmten Code zurück, basierend auf dem übergebenen Code-Parameter.
     def get_message(self, code):
         return self.messages[code]
