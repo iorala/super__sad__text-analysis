@@ -5,6 +5,8 @@ from Komponenten.Textanalyse.Sentiment import SentimentAnalyse
 from Komponenten.Visualisierung.DataVisualiser import VisualisationHandler, DataVisualiser
 
 
+# Die Hauptfunktion der Anwendung, die den Ablauf der Sentiment-Analyse-Pipeline steuert. Importiert Daten,
+# führt die Sentiment-Analyse durch, visualisiert die Ergebnisse und speichert die Diagramme.
 def main(datei):
     print("Starte Pipeline")
 
@@ -50,7 +52,7 @@ def main(datei):
     print("Bar Chart wurde gespeichert unter:", bar_chart_file)
     print("Pie Chart wurde gespeichert unter:", pie_chart_file)
 
-
+# Lädt das 'punkt'-Ressourcenpaket aus dem NLTK-Modul herunter, das für die Tokenisierung benötigt wird.
 if __name__ == "__main__":
     nltk.download('punkt')  # Lade das 'punkt'-Ressourcenpaket herunter
     main("test.csv")

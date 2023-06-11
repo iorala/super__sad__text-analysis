@@ -40,6 +40,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # - Formular für Upload
 # - Erklärt Format
 @app.route('/')
+# Rendert die Hauptseite der Anwendung, auf der Benutzer Texte hochladen können.
 def home():
     titel = "Texte hochladen"
     return render_template("main.html", titel=titel)
@@ -50,6 +51,7 @@ def home():
 #     - Zeigt Tabelle mit dem HEAD der Daten
 #     - →Button für Versand an Sentiment Analysis
 @app.route('/import_anzeigen', methods=["GET", "POST"])
+# Verarbeitet den hochgeladenen Text und zeigt eine Tabelle mit den importierten Daten an.
 def import_anzeigen():
     titel = "Importierte Texte"
     if "upload_datei" not in request.files:
@@ -74,6 +76,8 @@ def import_anzeigen():
 #     - Zeigt Daten HEAD (gleiche Zeilen) mit dem Sentiment wert
 #     - Auswahl der gewünschten Visualisierung
 @app.route('/textanalyse', methods=["GET", "POST"])
+# Führt die Sentiment-Analyse für den hochgeladenen Text durch und zeigt eine Tabelle mit den Sentiment-Werten an.
+# Bietet auch eine Auswahl für die gewünschte Visualisierung an.
 def textanalyse():
     titel = "Sentiment Analyse"
     # Prüfen, ob schon eine Datei hochgeladen wurde (z.b. bei zurück oder direkten Aufruf der Seite)
@@ -98,6 +102,8 @@ def textanalyse():
 #     - Speichert Visualisierung als PNG
 #
 @app.route('/visualisierung', methods=["GET", "POST"])
+# Führt die Visualisierung basierend auf den Sentiment-Daten durch und zeigt das erstellte Diagramm an.
+# Bietet die Möglichkeit, die Visualisierung als PNG-Datei zu speichern.
 def visualisierung():
     if 'sentiment_result_dict' not in session:
         fehlermeldung = messages.get_message(constants.SENTIMENT_ANALYSE_FAILED)
@@ -125,7 +131,6 @@ def visualisierung():
     return render_template("visualisierung.html", fig_html=fig_html, png_datei=png_datei, backpage="textanalyse")
 
 
-# App Ausführen
-#
+# App Ausführen. Startet die Flask-Anwendung und macht sie unter localhost:5000 verfügbar.
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
