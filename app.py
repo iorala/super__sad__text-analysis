@@ -2,6 +2,15 @@
 from flask import Flask, render_template, request, session
 import plotly.io as pio
 
+# NLTK-Modul importieren und prüfen ob das 'punkt'-Paket bereits heruntergeladen wurde
+import nltk
+try:
+    # Versuchen Sie, das 'punkt'-Paket zu importieren
+    from nltk.tokenize import PunktSentenceTokenizer
+except ImportError:
+    # Wenn das Modul nicht gefunden wird, puntk herunterladen
+    nltk.download('punkt')
+
 # Komponenten laden
 
 # Custom Funktionen für die Benutzeroberfläche
