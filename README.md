@@ -5,20 +5,22 @@ Die Abhängigkeiten sind in der Datei `requirements.txt` aufgelistet. Die App wu
 
 ## Installation
 1. Repository klonen
-`git clone git@github.com:iorala/super__sad__text-analysis.git` oder `git clone https://github.com/iorala/super__sad__text-analysis.git`
+- `git clone git@github.com:iorala/super__sad__text-analysis.git` 
+oder 
+- `git clone https://github.com/iorala/super__sad__text-analysis.git`
 2. In das Verzeichnis wechseln
-`cd super__sad__text-analysis`
+- `cd super__sad__text-analysis`
 3. Virtuelle Umgebung erstellen
-`python -m venv venv`
+- `python -m venv venv`
 4. Virtuelle Umgebung aktivieren
-**Windows:** `venv\Scripts\activate.bat` [cmd] oder `venv\Scripts\activate.ps1` [powershell]
-**Linux und macOS:** `source venv/bin/activate`
+- **Windows:** `venv\Scripts\activate.bat` [cmd] oder `venv\Scripts\activate.ps1` [powershell]
+- **Linux und macOS:** `source venv/bin/activate`
 5. Abhängigkeiten installieren
-`pip install -r requirements.txt`
+- `pip install -r requirements.txt`
 6. App starten
-`python app.py`
+- `python app.py`
 7. App im Browser öffnen
-`http://127.0.0.1:5000/`
+- `http://127.0.0.1:5000/`
 
 
 ## Projektstruktur 
