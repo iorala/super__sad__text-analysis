@@ -8,7 +8,7 @@ try:
     # Versuchen Sie, das 'punkt'-Paket zu importieren
     nltk.data.find('tokenizers/punkt')
 except ImportError:
-    # Wenn das Modul nicht gefunden wird, puntk herunterladen
+    # Wenn das Modul nicht gefunden wird, punkt herunterladen
     nltk.download('punkt')
 
 # Komponenten laden
