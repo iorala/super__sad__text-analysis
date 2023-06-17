@@ -6,7 +6,7 @@ import plotly.io as pio
 import nltk
 try:
     # Versuchen Sie, das 'punkt'-Paket zu importieren
-    nltk.data.find('tokenizers/punkt')
+    nltk.data.find('punkt')
 except ImportError:
     # Wenn das Modul nicht gefunden wird, punkt herunterladen
     nltk.download('punkt')
